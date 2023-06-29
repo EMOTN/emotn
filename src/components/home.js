@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayRemove, getDoc, arrayUnion } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 const Home = ({ user }) => {
   const [entries, setEntries] = useState([]);
@@ -159,6 +160,7 @@ const Home = ({ user }) => {
           </div>
         ))}
       </div>
+      <Link to="/anonymous-messages">Write/Request Nice Messages</Link>
     </div>
   );
 };
