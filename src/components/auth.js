@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { auth, googleProvider, db } from '../config/firebase';
-import { collection, getDoc, query, where } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const signUp = async () => {
     try {
@@ -15,27 +16,35 @@ const Auth = () => {
       const userRef = doc(db, 'users', user.uid);
       await setDoc(userRef, {
         email: user.email,
-        entries: [],
+        profileCreated: false,
       });
 
       setEmail("");
       setPassword("");
+      navigate('/createUserProfile'); // Redirect to the create profile page
     } catch (error) {
       console.error(error);
     }
   };
-
 
   const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setEmail("");
       setPassword("");
+
+      // Check if the user's profile is already created
+      const userRef = doc(db, 'users', auth.currentUser.uid);
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists() && docSnap.data().profileCreated) {
+        navigate('/'); // Redirect to the home page
+      } else {
+        navigate('/createUserProfile'); // Redirect to the create profile page
+      }
     } catch (error) {
       console.error(error);
     }
   };
-
 
   const signInWithGoogle = async () => {
     try {
@@ -49,14 +58,20 @@ const Auth = () => {
         // Create a new user document if it doesn't exist
         await setDoc(userRef, {
           email: user.email,
-          entries: [],
+          profileCreated: false,
         });
+      }
+
+      // Check if the user's profile is already created
+      if (docSnap.exists() && docSnap.data().profileCreated) {
+        navigate('/'); // Redirect to the home page
+      } else {
+        navigate('/createUserProfile'); // Redirect to the create profile page
       }
     } catch (error) {
       console.error(error);
     }
   };
-
 
   const handleSignOut = async () => {
     try {
@@ -69,11 +84,13 @@ const Auth = () => {
   return (
     <div>
       {auth.currentUser ? (
+        // Logged in state
         <div>
           <h1>Welcome to My Journal, {auth.currentUser.email}!</h1>
           <button onClick={handleSignOut}>Logout</button>
         </div>
       ) : (
+        // Not logged in state
         <div>
           <h1>Please sign up or log in to start writing entries!</h1>
           <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} type="email" />
