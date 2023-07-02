@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayRemove, getDoc, arrayUnion } from 'firebase/firestore';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import NewEntryPrompt from './prompt';
 
 const Home = ({ user }) => {
   const [entries, setEntries] = useState([]);
@@ -109,6 +112,11 @@ const Home = ({ user }) => {
 
       <div>
         <h2>Add New Entry</h2>
+        <Popup trigger={<button> Let's get journaling⚡️</button>} modal>
+          <div>
+            <NewEntryPrompt/>
+          </div>
+        </Popup>
         <form onSubmit={addEntry}>
           <input
             type="text"
