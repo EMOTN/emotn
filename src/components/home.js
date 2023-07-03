@@ -167,12 +167,14 @@
 
 // export default Home;
 
+
+
 import { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
 
 import { Timestamp, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayRemove, getDoc, arrayUnion } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
-import HypeserverDatepicker from "./Calendar";
+import TestCalendar from "./Calendar";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import NewEntryPrompt from './prompt';
@@ -184,6 +186,7 @@ const Home = ({ user }) => {
   const [selectedMood, setSelectedMood] = useState('');
   const [customMood, setCustomMood] = useState('');
   const [customEmoji, setCustomEmoji] = useState('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -247,13 +250,16 @@ const Home = ({ user }) => {
     }));
   };
 
+
+
   const addEntry = async (e) => {
     e.preventDefault();
     try {
       const entryRef = await addDoc(collection(db, 'entries'), {
         ...newEntry,
-        mood: selectedMood || customMood, // Use selectedMood if available, otherwise use customMood
+        mood: selectedMood || customMood,
         userId: user.uid,
+        date: Timestamp.fromDate(newEntry.date instanceof Date ? newEntry.date : new Date(newEntry.date)), // Convert selected date to Firestore timestamp
       });
 
       const entryId = entryRef.id;
@@ -262,15 +268,11 @@ const Home = ({ user }) => {
       await updateDoc(userRef, {
         entries: arrayUnion({
           id: entryId,
-          mood: selectedMood || customMood, // Use selectedMood if available, otherwise use customMood
-          date: newEntry.date,
+          mood: selectedMood || customMood,
+          date: Timestamp.fromDate(newEntry.date instanceof Date ? newEntry.date : new Date(newEntry.date)), // Convert selected date to Firestore timestamp
           body: newEntry.body,
         }),
       });
-
-
-
-
 
       setEntries((prevEntries) => [
         ...prevEntries,
@@ -285,6 +287,7 @@ const Home = ({ user }) => {
       console.error(error);
     }
   };
+
 
 
   const handleEmojiChange = (emoji) => {
@@ -444,7 +447,10 @@ const Home = ({ user }) => {
         </form>
       </div>
       <Link to="/anonymous-messages">Write/Request Nice Messages</Link>
-      <HypeserverDatepicker />
+      <div>
+        <h2>Calendar</h2>
+        <TestCalendar user={user} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+      </div>
     </div>
   );
 };
