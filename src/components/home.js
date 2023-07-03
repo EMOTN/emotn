@@ -172,7 +172,7 @@
 import { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
 
-import { Timestamp, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayRemove, getDoc, arrayUnion } from 'firebase/firestore';
+import { Timestamp, serverTimestamp, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayRemove, getDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import TestCalendar from "./Calendar";
 import Popup from 'reactjs-popup';
@@ -251,15 +251,16 @@ const Home = ({ user }) => {
   };
 
 
-
   const addEntry = async (e) => {
     e.preventDefault();
     try {
+      const selectedTimestamp = Timestamp.fromDate(new Date(newEntry.date));
+
       const entryRef = await addDoc(collection(db, 'entries'), {
         ...newEntry,
         mood: selectedMood || customMood,
         userId: user.uid,
-        date: Timestamp.fromDate(newEntry.date instanceof Date ? newEntry.date : new Date(newEntry.date)), // Convert selected date to Firestore timestamp
+        date: selectedTimestamp,
       });
 
       const entryId = entryRef.id;
@@ -269,7 +270,7 @@ const Home = ({ user }) => {
         entries: arrayUnion({
           id: entryId,
           mood: selectedMood || customMood,
-          date: Timestamp.fromDate(newEntry.date instanceof Date ? newEntry.date : new Date(newEntry.date)), // Convert selected date to Firestore timestamp
+          date: selectedTimestamp,
           body: newEntry.body,
         }),
       });
@@ -287,7 +288,6 @@ const Home = ({ user }) => {
       console.error(error);
     }
   };
-
 
 
   const handleEmojiChange = (emoji) => {
@@ -429,12 +429,13 @@ const Home = ({ user }) => {
             </div>
           </div>
           <input
-            type="date"
-            name="date"
-            placeholder="Date"
-            value={newEntry.date}
-            onChange={handleInputChange}
-          />
+  type="date"
+  name="date"
+  placeholder="Date"
+  value={newEntry.date ? new Date(newEntry.date).toISOString().substring(0, 10) : ''}
+  onChange={handleInputChange}
+/>
+
           <textarea
             name="body"
             placeholder="Journal Entry"
