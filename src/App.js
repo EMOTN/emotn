@@ -4,6 +4,7 @@ import { useNavigate, Routes, Route } from 'react-router-dom';
 import Auth from './components/auth';
 import Home from './components/home';
 import CreateUserProfile from './components/CreateUserProfile';
+import AnonymousMessages from './components/AnonymousMessages'; // Import the component for anonymous messaging
 import { doc, getDoc } from 'firebase/firestore';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
       <Routes>
         <Route path="/" element={profileCreated ? <Home user={user} /> : <CreateUserProfile user={user} setProfileCreated={setProfileCreated} />} />
         <Route path="/createUserProfile" element={<CreateUserProfile user={user} setProfileCreated={setProfileCreated} />} />
+        <Route path="/anonymous-messages" element={<AnonymousMessages user={user} />} /> 
       </Routes>
     </div>
   );
