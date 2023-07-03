@@ -7,6 +7,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 
 
 export default function HypeserverDatepicker({ user }) {
+
   const [date, setDate] = useState(new Date());
   const [entries, setEntries] = useState([]);
   useEffect(() => {
@@ -30,9 +31,11 @@ export default function HypeserverDatepicker({ user }) {
     };
     fetchEntries();
   }, [user]);
+
   const onChange = (selectedDate) => {
     setDate(selectedDate);
   };
+
   return (
     <div>
       <div className="calendar">
@@ -56,12 +59,4 @@ export default function HypeserverDatepicker({ user }) {
     </div>
   );
 }
-
-
-
-
-
-
-
-
 

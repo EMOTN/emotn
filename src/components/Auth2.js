@@ -1,13 +1,29 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { auth, googleProvider, db } from '../config/firebase';
 import { useNavigate } from 'react-router-dom';
+import ResponsiveAppBar from '../components/Navbar';
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  //Added these lines 7/3 @ 3:51PM
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+   // Check the authentication status on component mount
+   useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsAuthenticated(!!user);
+      console.log('Auth state changed:', !!user);
+    });
+    // Clean up the subscription when the component is unmounted
+    return () => unsubscribe();
+  }, []);
+
+
+
 
   const signUp = async () => {
     try {
@@ -22,6 +38,7 @@ const Auth = () => {
       setEmail("");
       setPassword("");
       navigate('/createUserProfile'); // Redirect to the create profile page
+      // navigate('/'); // Redirect to the home page
     } catch (error) {
       console.error(error);
     }
@@ -40,6 +57,7 @@ const Auth = () => {
         navigate('/'); // Redirect to the home page
       } else {
         navigate('/createUserProfile'); // Redirect to the create profile page
+        // navigate('/'); // Redirect to the home page
       }
     } catch (error) {
       console.error(error);
@@ -83,7 +101,9 @@ const Auth = () => {
 
   return (
     <div>
-      {auth.currentUser ? (
+      <ResponsiveAppBar />
+      {isAuthenticated && <ResponsiveAppBar isAuthenticated={isAuthenticated} />}
+{isAuthenticated ? (
         // Logged in state
         <div>
           <h1>Welcome to My Journal, {auth.currentUser.email}!</h1>
@@ -101,6 +121,28 @@ const Auth = () => {
         </div>
       )}
     </div>
+
+    // <div>
+    //   {auth.currentUser ? (
+    //     // Logged in state
+
+    //     <div>
+    //       <h1>Welcome to My Journal, {auth.currentUser.email}!</h1>
+    //       <button onClick={handleSignOut}>Logout</button>
+    //     </div>
+    //   ) : (
+    //     // Not logged in state
+    //     <div>
+
+    //       <h1>Please sign up or log in to start writing entries!</h1>
+    //       <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} type="email" />
+    //       <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} type="password" />
+    //       <button onClick={signUp}>Sign Up</button>
+    //       <button onClick={signIn}>Sign In</button>
+    //       <button onClick={signInWithGoogle}>Sign In/Up With Google</button>
+    //     </div>
+    //   )}
+    // </div>
   );
 };
 
