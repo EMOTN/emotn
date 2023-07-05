@@ -171,8 +171,8 @@
 
 import { useState, useEffect } from 'react';
 import { auth, db } from '../config/firebase';
-
-import { Timestamp, serverTimestamp, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayRemove, getDoc, arrayUnion, setDoc } from 'firebase/firestore';
+import moment from 'moment';
+import { Timestamp, selectedTimestamp, serverTimestamp, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayRemove, getDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import TestCalendar from "./Calendar";
 import Popup from 'reactjs-popup';
@@ -254,7 +254,16 @@ const Home = ({ user }) => {
   const addEntry = async (e) => {
     e.preventDefault();
     try {
-      const selectedTimestamp = Timestamp.fromDate(new Date(newEntry.date));
+      const selectedDate = new Date(newEntry.date); // Parse the selected date
+
+      // Get the user's time zone offset in minutes
+      const userTimezoneOffset = selectedDate.getTimezoneOffset();
+
+      // Adjust the selected date using the time zone offset
+      const adjustedDate = moment(selectedDate).add(userTimezoneOffset, 'minutes');
+
+      // Convert the adjusted date to a Firestore Timestamp
+      const selectedTimestamp = Timestamp.fromDate(adjustedDate.toDate());
 
       const entryRef = await addDoc(collection(db, 'entries'), {
         ...newEntry,
@@ -288,6 +297,8 @@ const Home = ({ user }) => {
       console.error(error);
     }
   };
+
+
 
 
   const handleEmojiChange = (emoji) => {
