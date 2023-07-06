@@ -31,6 +31,7 @@ const Home = ({ user }) => {
   const [customMood, setCustomMood] = useState("");
   const [customEmoji, setCustomEmoji] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -174,12 +175,30 @@ const Home = ({ user }) => {
     surprised: ["Amazed", "Shocked", "Astounded", "Speechless"],
   };
 
+  const fetchUser = async () => {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        setFirstName(userData.firstName);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [user]);
+
   return (
     <div>
-      <h1>Welcome to My Journal, {user.email}!</h1>
+      <h1>Welcome to Your Journal {firstName}!</h1>
       <button onClick={() => auth.signOut()}>Log Out</button>
 
-      <div>
+      {/* <div>
         <h2>Add New Entry</h2>
         <Popup trigger={<button> Let's get journaling⚡️</button>} modal>
           <div>
@@ -333,7 +352,7 @@ const Home = ({ user }) => {
             Add Entry
           </button>
         </form>
-      </div>
+      </div> */}
 
       <div>
         <h2>Calendar</h2>
