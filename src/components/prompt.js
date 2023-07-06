@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { db } from '../config/firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
+import {useNavigate} from 'react-router-dom';
 
 export const NewEntryPrompt = () => {
+    const navigate = useNavigate();
     const [prompt, setPrompt] = useState('')
 
     useEffect(() => {
@@ -14,10 +16,14 @@ export const NewEntryPrompt = () => {
         fetchRandomPrompt()
     }, [])
 
+    const handleClick = () => {
+        navigate("/new-journal-entry")
+    }
+
     return (
         <div>
             <h3>{prompt}</h3>
-            <button>Answer</button>
+            <button onClick={handleClick}>Answer</button>
             <p>or</p>
             <button>I prefer to start with a blank page</button>
         </div>

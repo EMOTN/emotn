@@ -6,6 +6,7 @@ import Home from './components/home';
 import CreateUserProfile from './components/CreateUserProfile';
 import AnonymousMessages from './components/AnonymousMessages'; // Import the component for anonymous messaging
 import { doc, getDoc } from 'firebase/firestore';
+import Editor from './components/Editor/Editor';
 
 function App() {
   const [user, setUser] = useState(null); // Track user authentication status
@@ -41,6 +42,7 @@ function App() {
         <Route path="/" element={profileCreated ? <Home user={user} /> : <CreateUserProfile user={user} setProfileCreated={setProfileCreated} />} />
         <Route path="/createUserProfile" element={<CreateUserProfile user={user} setProfileCreated={setProfileCreated} />} />
         <Route path="/anonymous-messages" element={<AnonymousMessages user={user} />} /> 
+        <Route path="/new-journal-entry" element={<Editor user={user}/>} /> 
       </Routes>
     </div>
   );
