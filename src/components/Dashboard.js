@@ -14,12 +14,12 @@ import {
   getDoc,
   arrayRemove,
 } from "firebase/firestore";
-import { toDate } from "date-fns";
-// import { Link } from "react-router-dom";
+import { toDate, startOfDay, endOfDay } from "date-fns";
 import AnonymousMessages from "./AnonymousMessages";
 import "bootstrap/dist/css/bootstrap.css";
 import NewEntryPrompt from "./prompt";
 import Popup from "reactjs-popup";
+import "./Dashboard.css";
 
 const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
   const [entries, setEntries] = useState([]);
@@ -28,18 +28,14 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
     const fetchEntries = async () => {
       try {
         if (user && user.uid) {
-          const startDate = new Date(
-            selectedDate.getFullYear(),
-            selectedDate.getMonth(),
-            selectedDate.getDate()
-          );
-          const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
+          const startDate = startOfDay(selectedDate);
+          const endDate = endOfDay(selectedDate);
 
           const q = query(
             collection(db, "entries"),
             where("userId", "==", user.uid),
             where("date", ">=", startDate),
-            where("date", "<", endDate)
+            where("date", "<=", endDate)
           );
 
           const entriesSnapshot = await getDocs(q);
@@ -67,22 +63,25 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
       <div className="row">
         <div className="col-md-6">
           <div className="leftColumn">
-            <h2>Add New Entry</h2>
             <Popup trigger={<button> Let's get journaling⚡️</button>} modal>
               <div>
                 <NewEntryPrompt />
               </div>
             </Popup>
             {entries.length > 0 ? (
-              entries.map((entry) => (
-                <div key={entry.id}>
+              <div>
+                <div key={entries[0].id}>
                   <p>
-                    Date: {toDate(entry.date.toDate()).toLocaleDateString()}
+                    Date:{" "}
+                    {toDate(entries[0].date.toDate()).toLocaleDateString()}
                   </p>
-                  <p>Mood: {entry.mood}</p>
-                  <p>Body: {entry.body}</p>
+                  <p>Mood: {entries[0].mood}</p>
+                  <p>Body: {entries[0].body}</p>
                 </div>
-              ))
+                {entries.length > 1 && (
+                  <p>There are additional entries for the selected date.</p>
+                )}
+              </div>
             ) : (
               <p>No entries available for the selected date.</p>
             )}
@@ -108,3 +107,5 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
 };
 
 export default Dashboard;
+
+//youre back

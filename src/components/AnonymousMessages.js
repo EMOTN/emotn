@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   collection,
   addDoc,
   query,
-  where,
   getDocs,
   updateDoc,
   arrayUnion,
@@ -12,10 +11,14 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { db } from "../config/firebase";
+import "./AnonymousMessages.css";
 
 const AnonymousMessages = ({ user }) => {
   const [niceMessage, setNiceMessage] = useState("");
   const [favoritedMessages, setFavoritedMessages] = useState([]);
+  const [sendPopup, setSendPopup] = useState(false);
+  const [receivePopup, setReceivePopup] = useState(false);
+  const [messageInput, setMessageInput] = useState("");
 
   useEffect(() => {
     const fetchFavoritedMessages = async () => {
@@ -37,6 +40,20 @@ const AnonymousMessages = ({ user }) => {
     }
   }, [user]);
 
+  const getRandomMessage = (messages) => {
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    return messages[randomIndex];
+  };
+
+  const openSendPopup = () => {
+    setSendPopup(true);
+  };
+
+  const openReceivePopup = () => {
+    setReceivePopup(true);
+    handleNiceMessageRequest();
+  };
+
   const handleNiceMessageRequest = async () => {
     try {
       // Fetch all nice messages from the anonymousMessages collection
@@ -47,10 +64,8 @@ const AnonymousMessages = ({ user }) => {
       );
 
       // Select a random nice message from the fetched messages
-      const randomIndex = Math.floor(
-        Math.random() * anonymousMessagesData.length
-      );
-      setNiceMessage(anonymousMessagesData[randomIndex]);
+      const randomMessage = getRandomMessage(anonymousMessagesData);
+      setNiceMessage(randomMessage);
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +73,7 @@ const AnonymousMessages = ({ user }) => {
 
   const handleNiceMessageSubmit = async (e) => {
     e.preventDefault();
-    const message = e.target.message.value;
+    const message = messageInput;
 
     try {
       // Add the nice message to the anonymousMessages collection
@@ -67,7 +82,10 @@ const AnonymousMessages = ({ user }) => {
       });
 
       // Clear the input field
-      e.target.message.value = "";
+      setMessageInput("");
+
+      // Close the send popup
+      setSendPopup(false);
     } catch (error) {
       console.error(error);
     }
@@ -115,31 +133,52 @@ const AnonymousMessages = ({ user }) => {
 
   return (
     <div>
-      <h2>Anonymous Messages</h2>
+      <h2>Message in a Bottle</h2>
 
-      <form onSubmit={handleNiceMessageSubmit}>
-        <textarea name="message" placeholder="Write a nice message..." />
-        <button type="submit">Submit</button>
-      </form>
+      <button onClick={openSendPopup}>Send a Bottle</button>
 
-      <button onClick={handleNiceMessageRequest}>Receive a Message</button>
+      {sendPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h3>Write a nice message</h3>
+            <form onSubmit={handleNiceMessageSubmit}>
+              <textarea
+                name="message"
+                placeholder="Write a nice message..."
+                value={messageInput}
+                onChange={(e) => setMessageInput(e.target.value)}
+              />
+              <p>
+                <button type="submit">Put it in a bottle</button>
+              </p>
+            </form>
+            <button onClick={() => setSendPopup(false)}>Nevermind!</button>
+          </div>
+        </div>
+      )}
 
-      {niceMessage && (
-        <div>
-          <h3>Nice Message</h3>
-          <p>{niceMessage}</p>
-          <button
-            onClick={() => handleFavoriteMessage(niceMessage)}
-            disabled={isMessageFavorited(niceMessage)}
-          >
-            {isMessageFavorited(niceMessage) ? "Favorited" : "Favorite"}
-          </button>
+      <button onClick={openReceivePopup}>Receive a Bottle</button>
+
+      {receivePopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h3>Oh! You found a bottle! There seems to be a message inside!</h3>
+            <h2>*POP*</h2>
+            <p>{niceMessage}</p>
+            <button
+              onClick={() => handleFavoriteMessage(niceMessage)}
+              disabled={isMessageFavorited(niceMessage)}
+            >
+              {isMessageFavorited(niceMessage) ? "Favorited" : "Favorite"}
+            </button>
+            <button onClick={() => setReceivePopup(false)}>Im Done!</button>
+          </div>
         </div>
       )}
 
       {favoritedMessages.length > 0 && (
         <div>
-          <h3>Your Favorited Messages</h3>
+          <h3>Your Favorite Messages</h3>
           {favoritedMessages.map((message) => (
             <div key={message}>
               <p>{message}</p>

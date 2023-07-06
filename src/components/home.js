@@ -355,7 +355,6 @@ const Home = ({ user }) => {
       </div> */}
 
       <div>
-        <h2>Calendar</h2>
         <Dashboard
           user={user}
           selectedDate={selectedDate}
