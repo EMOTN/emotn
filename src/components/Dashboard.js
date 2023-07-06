@@ -2,17 +2,34 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { db } from "../config/firebase";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  arrayUnion,
+  doc,
+  getDoc,
+  arrayRemove,
+} from "firebase/firestore";
 import { toDate } from "date-fns";
+// import { Link } from "react-router-dom";
+import AnonymousMessages from "./AnonymousMessages";
 
-const TestCalendar = ({ user, selectedDate, setSelectedDate }) => {
+const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
     const fetchEntries = async () => {
       try {
         if (user && user.uid) {
-          const startDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+          const startDate = new Date(
+            selectedDate.getFullYear(),
+            selectedDate.getMonth(),
+            selectedDate.getDate()
+          );
           const endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000);
 
           const q = query(
@@ -51,8 +68,8 @@ const TestCalendar = ({ user, selectedDate, setSelectedDate }) => {
         {entries.length > 0 ? (
           entries.map((entry) => (
             <div key={entry.id}>
-<p>Date: {toDate(entry.date.toDate()).toLocaleDateString()}</p>
-            <p>Mood: {entry.mood}</p>
+              <p>Date: {toDate(entry.date.toDate()).toLocaleDateString()}</p>
+              <p>Mood: {entry.mood}</p>
               <p>Body: {entry.body}</p>
             </div>
           ))
@@ -60,9 +77,9 @@ const TestCalendar = ({ user, selectedDate, setSelectedDate }) => {
           <p>No entries available for the selected date.</p>
         )}
       </div>
+      <AnonymousMessages user={user} />
     </div>
   );
 };
 
-export default TestCalendar;
-
+export default Dashboard;

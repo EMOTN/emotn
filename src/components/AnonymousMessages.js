@@ -1,16 +1,27 @@
-import { useState, useEffect } from 'react';
-import { collection, addDoc, query, where, getDocs, updateDoc, arrayUnion, doc, getDoc, arrayRemove } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { useState, useEffect } from "react";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  arrayUnion,
+  doc,
+  getDoc,
+  arrayRemove,
+} from "firebase/firestore";
+import { db } from "../config/firebase";
 
 const AnonymousMessages = ({ user }) => {
-  const [niceMessage, setNiceMessage] = useState('');
+  const [niceMessage, setNiceMessage] = useState("");
   const [favoritedMessages, setFavoritedMessages] = useState([]);
 
   useEffect(() => {
     const fetchFavoritedMessages = async () => {
       try {
         // Fetch the user's favoritedMessages array from their Firestore document
-        const userRef = doc(db, 'users', user.uid);
+        const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
         const userData = userSnap.data();
         if (userData && userData.favoritedMessages) {
@@ -29,12 +40,16 @@ const AnonymousMessages = ({ user }) => {
   const handleNiceMessageRequest = async () => {
     try {
       // Fetch all nice messages from the anonymousMessages collection
-      const anonymousMessagesQuery = query(collection(db, 'anonymousMessages'));
+      const anonymousMessagesQuery = query(collection(db, "anonymousMessages"));
       const anonymousMessagesSnapshot = await getDocs(anonymousMessagesQuery);
-      const anonymousMessagesData = anonymousMessagesSnapshot.docs.map((doc) => doc.data().message);
+      const anonymousMessagesData = anonymousMessagesSnapshot.docs.map(
+        (doc) => doc.data().message
+      );
 
       // Select a random nice message from the fetched messages
-      const randomIndex = Math.floor(Math.random() * anonymousMessagesData.length);
+      const randomIndex = Math.floor(
+        Math.random() * anonymousMessagesData.length
+      );
       setNiceMessage(anonymousMessagesData[randomIndex]);
     } catch (error) {
       console.error(error);
@@ -47,42 +62,47 @@ const AnonymousMessages = ({ user }) => {
 
     try {
       // Add the nice message to the anonymousMessages collection
-      await addDoc(collection(db, 'anonymousMessages'), {
+      await addDoc(collection(db, "anonymousMessages"), {
         message,
       });
 
       // Clear the input field
-      e.target.message.value = '';
+      e.target.message.value = "";
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleFavoriteMessage = async (message) => {
-    // Update the user's favoritedMessages array in their Firestore document
-    try {
-      const userRef = doc(db, 'users', user.uid);
-      await updateDoc(userRef, {
-        favoritedMessages: arrayUnion(message),
-      });
+    // Check if the user object and uid property are defined
+    if (user && user.uid) {
+      // Update the user's favoritedMessages array in their Firestore document
+      try {
+        const userRef = doc(db, "users", user.uid);
+        await updateDoc(userRef, {
+          favoritedMessages: arrayUnion(message),
+        });
 
-      // Update the local state
-      setFavoritedMessages((prevMessages) => [...prevMessages, message]);
-    } catch (error) {
-      console.error(error);
+        // Update the local state
+        setFavoritedMessages((prevMessages) => [...prevMessages, message]);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   const handleUnfavoriteMessage = async (message) => {
     // Remove the message from the user's favoritedMessages array in their Firestore document
     try {
-      const userRef = doc(db, 'users', user.uid);
+      const userRef = doc(db, "users", user.uid);
       await updateDoc(userRef, {
         favoritedMessages: arrayRemove(message),
       });
 
       // Update the local state
-      setFavoritedMessages((prevMessages) => prevMessages.filter((prevMessage) => prevMessage !== message));
+      setFavoritedMessages((prevMessages) =>
+        prevMessages.filter((prevMessage) => prevMessage !== message)
+      );
     } catch (error) {
       console.error(error);
     }
@@ -112,7 +132,7 @@ const AnonymousMessages = ({ user }) => {
             onClick={() => handleFavoriteMessage(niceMessage)}
             disabled={isMessageFavorited(niceMessage)}
           >
-            {isMessageFavorited(niceMessage) ? 'Favorited' : 'Favorite'}
+            {isMessageFavorited(niceMessage) ? "Favorited" : "Favorite"}
           </button>
         </div>
       )}
@@ -123,7 +143,9 @@ const AnonymousMessages = ({ user }) => {
           {favoritedMessages.map((message) => (
             <div key={message}>
               <p>{message}</p>
-              <button onClick={() => handleUnfavoriteMessage(message)}>Unfavorite</button>
+              <button onClick={() => handleUnfavoriteMessage(message)}>
+                Unfavorite
+              </button>
             </div>
           ))}
         </div>
