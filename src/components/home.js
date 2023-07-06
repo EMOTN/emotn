@@ -10,6 +10,7 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import NewEntryPrompt from './prompt';
 
+
 const Home = ({ user }) => {
   const [entries, setEntries] = useState([]);
   const [newEntry, setNewEntry] = useState({ mood: '', date: '', body: '' });
