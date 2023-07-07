@@ -64,7 +64,14 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
         <div className="col-md-6">
           <div className="leftColumn">
             <div className="entryButton">
-              <Popup trigger={<button> Let's get journaling⚡️</button>} modal>
+              <Popup
+                trigger={
+                  <div className="button-container">
+                    <button>Let's get journaling⚡️</button>
+                  </div>
+                }
+                modal
+              >
                 <div>
                   <NewEntryPrompt />
                 </div>

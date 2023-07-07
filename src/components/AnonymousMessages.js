@@ -147,37 +147,55 @@ const AnonymousMessages = ({ user }) => {
 
       {sendPopup && (
         <div className="popup">
-          <div className="popup-content">
-            <h3>Write a nice message</h3>
+          <div className="popup-content" style={{ backgroundColor: "#8BBD8B" }}>
+            <h4 style={{ textAlign: "center" }}>
+              You found an empty bottle! Looks pretty airtight. Maybe you could
+              send somebody a message...
+            </h4>
             <form onSubmit={handleNiceMessageSubmit}>
               <textarea
                 name="message"
-                placeholder="Write a nice message..."
+                placeholder="Write a nice message and brighten somebody's day ..."
                 value={messageInput}
                 onChange={(e) => setMessageInput(e.target.value)}
+                style={{
+                  width: "745px",
+                  height: "150px",
+                  backgroundColor: "#c1cc99",
+                }}
               />
-              <p>
-                <button type="submit">Put it in a bottle</button>
-              </p>
+              <div className="submitPopUpButton">
+                <p>
+                  <button type="submit">Put it in a bottle</button>
+                </p>
+                <button onClick={() => setSendPopup(false)}>Nevermind!</button>
+              </div>
             </form>
-            <button onClick={() => setSendPopup(false)}>Nevermind!</button>
           </div>
         </div>
       )}
 
       {receivePopup && (
         <div className="popup">
-          <div className="popup-content">
-            <h3>Oh! You found a bottle! There seems to be a message inside!</h3>
-            <h2>*POP*</h2>
-            <p>{niceMessage}</p>
-            <button
-              onClick={() => handleFavoriteMessage(niceMessage)}
-              disabled={isMessageFavorited(niceMessage)}
-            >
-              {isMessageFavorited(niceMessage) ? "Favorited" : "Favorite"}
-            </button>
-            <button onClick={() => setReceivePopup(false)}>Im Done!</button>
+          <div className="popup-content" style={{ backgroundColor: "#8BBD8B" }}>
+            <h4 style={{ textAlign: "center" }}>
+              Oh! You found a bottle! There seems to be a message inside!
+            </h4>
+            <h5 style={{ textAlign: "center" }}>*POP*</h5>
+            <div className="message-box">
+              <p style={{ textAlign: "center" }}>{niceMessage}</p>
+            </div>
+            <div className="favoriteButton">
+              <p>
+                <button
+                  onClick={() => handleFavoriteMessage(niceMessage)}
+                  disabled={isMessageFavorited(niceMessage)}
+                >
+                  {isMessageFavorited(niceMessage) ? "Favorited" : "Favorite"}
+                </button>
+              </p>
+              <button onClick={() => setReceivePopup(false)}>Im Done!</button>
+            </div>
           </div>
         </div>
       )}

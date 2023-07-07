@@ -11,10 +11,23 @@
 }
 
 .popup-content {
-  background-color: white;
   padding: 20px;
   border-radius: 8px;
   overflow-y: hidden; /* Disable vertical scrolling on the popup content */
+}
+
+.submitPopUpButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.favoriteButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .popup-content h3 {
@@ -35,7 +48,7 @@
 
 .favorited-messages {
   overflow-y: scroll; /* Enable vertical scrolling on favorited-messages section */
-  height: 500px; /* Set the maximum height for scrolling */
+  height: 350px; /* Set the maximum height for scrolling */
 }
 
 .favorited-messages::-webkit-scrollbar {
@@ -87,4 +100,11 @@
 .titleFavorite {
   margin-top: 40px;
   text-align: center;
+}
+
+.message-box {
+  background-color: #c1cc99;
+  border: 2px solid #8b9474;
+  padding: 10px;
+  margin-bottom: 20px;
 }
