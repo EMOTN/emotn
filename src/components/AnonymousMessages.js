@@ -132,10 +132,18 @@ const AnonymousMessages = ({ user }) => {
   };
 
   return (
-    <div>
-      <h2>Message in a Bottle</h2>
+    <div className="container">
+      <h2 className="title">Message in a Bottle</h2>
 
-      <button onClick={openSendPopup}>Send a Bottle</button>
+      <div className="button-container">
+        <button className="button" onClick={openSendPopup}>
+          Send a Bottle
+        </button>
+
+        <button className="button" onClick={openReceivePopup}>
+          Receive a Bottle
+        </button>
+      </div>
 
       {sendPopup && (
         <div className="popup">
@@ -157,8 +165,6 @@ const AnonymousMessages = ({ user }) => {
         </div>
       )}
 
-      <button onClick={openReceivePopup}>Receive a Bottle</button>
-
       {receivePopup && (
         <div className="popup">
           <div className="popup-content">
@@ -177,16 +183,21 @@ const AnonymousMessages = ({ user }) => {
       )}
 
       {favoritedMessages.length > 0 && (
-        <div>
-          <h3>Your Favorite Messages</h3>
-          {favoritedMessages.map((message) => (
-            <div key={message}>
-              <p>{message}</p>
-              <button onClick={() => handleUnfavoriteMessage(message)}>
-                Unfavorite
-              </button>
-            </div>
-          ))}
+        <div className="favorited-messages-container">
+          <h3 className="titleFavorite">My Favorite Messages</h3>
+          <div className="favorited-messages">
+            {favoritedMessages.map((message) => (
+              <div key={message} className="message-container">
+                <p className="message">💟{message}</p>
+                <button
+                  onClick={() => handleUnfavoriteMessage(message)}
+                  className="unfavorite-button"
+                >
+                  🗑️
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

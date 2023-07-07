@@ -63,24 +63,29 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
       <div className="row">
         <div className="col-md-6">
           <div className="leftColumn">
-            <Popup trigger={<button> Let's get journaling⚡️</button>} modal>
-              <div>
-                <NewEntryPrompt />
-              </div>
-            </Popup>
+            <div className="entryButton">
+              <Popup trigger={<button> Let's get journaling⚡️</button>} modal>
+                <div>
+                  <NewEntryPrompt />
+                </div>
+              </Popup>
+            </div>
             {entries.length > 0 ? (
-              <div>
+              <div className="entries">
                 <div key={entries[0].id}>
-                  <p>
-                    Date:{" "}
+                  <p className="entryLabel">
+                    <b>Date:</b>{" "}
                     {toDate(entries[0].date.toDate()).toLocaleDateString()}
                   </p>
-                  <p>Mood: {entries[0].mood}</p>
-                  <p>Body: {entries[0].body}</p>
+                  <p className="entryLabel">
+                    <b>Mood:</b> {entries[0].mood}
+                  </p>
+                  <p className="entryBody">{entries[0].body}</p>
                 </div>
-                {entries.length > 1 && (
+                {/* {entries.length > 1 && (
                   <p>There are additional entries for the selected date.</p>
-                )}
+                )} */}
+                <hr></hr>
               </div>
             ) : (
               <p>No entries available for the selected date.</p>
@@ -89,14 +94,15 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
         </div>
         <div className="col-md-6">
           <div className="row">
-            <div className="col-12">
+            <div className="rightColumn">
               <div className="calendar">
                 <Calendar value={selectedDate} onChange={handleDateChange} />
               </div>
-            </div>
-            <div className="col-12">
-              <div className="messages">
-                <AnonymousMessages user={user} />
+
+              <div className="col-12">
+                <div className="messages">
+                  <AnonymousMessages user={user} />
+                </div>
               </div>
             </div>
           </div>
@@ -107,5 +113,3 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
 };
 
 export default Dashboard;
-
-//youre back

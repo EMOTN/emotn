@@ -195,9 +195,10 @@ const Home = ({ user }) => {
 
   return (
     <div>
-      <h1>Welcome to Your Journal {firstName}!</h1>
-      <button onClick={() => auth.signOut()}>Log Out</button>
-
+      <div style={{ marginLeft: "65px" }}>
+        <h1>Welcome to Your Journal {firstName}!</h1>
+        <button onClick={() => auth.signOut()}>Log Out</button>
+      </div>
       {/* <div>
         <h2>Add New Entry</h2>
         <Popup trigger={<button> Let's get journaling⚡️</button>} modal>
