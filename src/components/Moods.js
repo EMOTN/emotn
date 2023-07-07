@@ -19,11 +19,11 @@ const Moods = () => {
   };
 
   const moodOptions = {
-    happy: ['Option 1', 'Option 2', 'Option 3'],
-    sad: ['Option 4', 'Option 5', 'Option 6'],
-    angry: ['Option 7', 'Option 8', 'Option 9'],
-    fearful: ['Option 10', 'Option 11', 'Option 12'],
-    surprised: ['Option 13', 'Option 14', 'Option 15'],
+    happy: ['Excited', 'Joyful', 'Content', 'Energetic'],
+    sad: ['Melancholy', 'Gloomy', 'Heartbroken', 'Lonely'],
+    angry: ['Furious', 'Annoyed', 'Frustrated', 'Resentful'],
+    fearful: ['Afraid', 'Nervous', 'Anxious', 'Terrified'],
+    surprised: ['Amazed', 'Shocked', 'Astounded', 'Speechless'],
   };
 
   return (

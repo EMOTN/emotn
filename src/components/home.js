@@ -1,28 +1,45 @@
-
-
-import { useState, useEffect } from 'react';
-import { auth, db } from '../config/firebase';
-
-import { Timestamp, collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc, arrayRemove, getDoc, arrayUnion } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
-import HypeserverDatepicker from "./Calendar";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import NewEntryPrompt from './prompt';
-
+import { useState, useEffect } from "react";
+import { auth, db } from "../config/firebase";
+import moment from "moment";
+import {
+  Timestamp,
+  selectedTimestamp,
+  serverTimestamp,
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  arrayRemove,
+  getDoc,
+  arrayUnion,
+  setDoc,
+} from "firebase/firestore";
+import Dashboard from "./Dashboard";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import NewEntryPrompt from "./prompt";
 
 const Home = ({ user }) => {
   const [entries, setEntries] = useState([]);
-  const [newEntry, setNewEntry] = useState({ mood: '', date: '', body: '' });
-  const [selectedEmoji, setSelectedEmoji] = useState('');
-  const [selectedMood, setSelectedMood] = useState('');
-  const [customMood, setCustomMood] = useState('');
-  const [customEmoji, setCustomEmoji] = useState('');
+  const [newEntry, setNewEntry] = useState({ mood: "", date: "", body: "" });
+  const [selectedEmoji, setSelectedEmoji] = useState("");
+  const [selectedMood, setSelectedMood] = useState("");
+  const [customMood, setCustomMood] = useState("");
+  const [customEmoji, setCustomEmoji] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
     const fetchEntries = async () => {
       try {
-        const q = query(collection(db, 'entries'), where('userId', '==', user.uid));
+        const q = query(
+          collection(db, "entries"),
+          where("userId", "==", user.uid)
+        );
         const entriesSnapshot = await getDocs(q);
         const entriesData = entriesSnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -39,25 +56,29 @@ const Home = ({ user }) => {
 
   const deleteEntry = async (id) => {
     try {
-      const entryDoc = doc(db, 'entries', id);
+      const entryDoc = doc(db, "entries", id);
       await deleteDoc(entryDoc);
-      setEntries((prevEntries) => prevEntries.filter((entry) => entry.id !== id));
+      setEntries((prevEntries) =>
+        prevEntries.filter((entry) => entry.id !== id)
+      );
     } catch (error) {
       console.error(error);
     }
   };
-//possibly delete later, do we want to be able to update past
+
   const updateEntryMood = async (id) => {
     try {
-      const entryDoc = doc(db, 'entries', id);
+      const entryDoc = doc(db, "entries", id);
       await updateDoc(entryDoc, { mood: newEntry.mood });
 
-      const userRef = doc(db, 'users', user.uid);
+      const userRef = doc(db, "users", user.uid);
 
       const userDoc = await getDoc(userRef);
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        const entryIndex = userData.entries.findIndex((entry) => entry.id === id);
+        const entryIndex = userData.entries.findIndex(
+          (entry) => entry.id === id
+        );
 
         if (entryIndex !== -1) {
           userData.entries[entryIndex].mood = newEntry.mood;
@@ -66,7 +87,9 @@ const Home = ({ user }) => {
       }
 
       setEntries((prevEntries) =>
-        prevEntries.map((entry) => (entry.id === id ? { ...entry, mood: newEntry.mood } : entry))
+        prevEntries.map((entry) =>
+          entry.id === id ? { ...entry, mood: newEntry.mood } : entry
+        )
       );
     } catch (error) {
       console.error(error);
@@ -84,46 +107,56 @@ const Home = ({ user }) => {
   const addEntry = async (e) => {
     e.preventDefault();
     try {
-      const entryRef = await addDoc(collection(db, 'entries'), {
+      const selectedDate = new Date(newEntry.date); // Parse the selected date
+
+      // Get the user's time zone offset in minutes
+      const userTimezoneOffset = selectedDate.getTimezoneOffset();
+
+      // Adjust the selected date using the time zone offset
+      const adjustedDate = moment(selectedDate).add(
+        userTimezoneOffset,
+        "minutes"
+      );
+
+      // Convert the adjusted date to a Firestore Timestamp
+      const selectedTimestamp = Timestamp.fromDate(adjustedDate.toDate());
+
+      const entryRef = await addDoc(collection(db, "entries"), {
         ...newEntry,
-        mood: selectedMood || customMood, // Use selectedMood if available, otherwise use customMood
+        mood: selectedMood || customMood,
         userId: user.uid,
+        date: selectedTimestamp,
       });
 
       const entryId = entryRef.id;
 
-      const userRef = doc(db, 'users', user.uid);
+      const userRef = doc(db, "users", user.uid);
       await updateDoc(userRef, {
         entries: arrayUnion({
           id: entryId,
-          mood: selectedMood || customMood, // Use selectedMood if available, otherwise use customMood
-          date: newEntry.date,
+          mood: selectedMood || customMood,
+          date: selectedTimestamp,
           body: newEntry.body,
         }),
       });
-
-
-
-
 
       setEntries((prevEntries) => [
         ...prevEntries,
         { id: entryId, mood: selectedMood || customMood, ...newEntry },
       ]);
-      setNewEntry({ mood: '', date: '', body: '' });
-      setSelectedMood('');
-      setCustomMood('');
-      setSelectedEmoji('');
-      setCustomEmoji('');
+      setNewEntry({ mood: "", date: "", body: "" });
+      setSelectedMood("");
+      setCustomMood("");
+      setSelectedEmoji("");
+      setCustomEmoji("");
     } catch (error) {
       console.error(error);
     }
   };
 
-
   const handleEmojiChange = (emoji) => {
     setSelectedEmoji(emoji);
-    setSelectedMood('');
+    setSelectedMood("");
   };
 
   const handleCustomMoodChange = (e) => {
@@ -135,23 +168,42 @@ const Home = ({ user }) => {
   };
 
   const moodOptions = {
-    happy: ['Excited', 'Joyful', 'Content', 'Energetic'],
-    sad: ['Melancholy', 'Gloomy', 'Heartbroken', 'Lonely'],
-    angry: ['Furious', 'Annoyed', 'Frustrated', 'Resentful'],
-    fearful: ['Afraid', 'Nervous', 'Anxious', 'Terrified'],
-    surprised: ['Amazed', 'Shocked', 'Astounded', 'Speechless'],
+    happy: ["Excited", "Joyful", "Content", "Energetic"],
+    sad: ["Melancholy", "Gloomy", "Heartbroken", "Lonely"],
+    angry: ["Furious", "Annoyed", "Frustrated", "Resentful"],
+    fearful: ["Afraid", "Nervous", "Anxious", "Terrified"],
+    surprised: ["Amazed", "Shocked", "Astounded", "Speechless"],
   };
+
+  const fetchUser = async () => {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        setFirstName(userData.firstName);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [user]);
 
   return (
     <div>
-      <h1>Welcome to My Journal, {user.email}!</h1>
-      <button onClick={() => auth.signOut()}>Log Out</button>
-
-      <div>
+      <div style={{ marginLeft: "65px" }}>
+        <h1>Welcome to Your Journal {firstName}!</h1>
+        <button onClick={() => auth.signOut()}>Log Out</button>
+      </div>
+      {/* <div>
         <h2>Add New Entry</h2>
         <Popup trigger={<button> Let's get journaling⚡️</button>} modal>
           <div>
-            <NewEntryPrompt/>
+            <NewEntryPrompt />
           </div>
         </Popup>
         <form onSubmit={addEntry}>
@@ -159,36 +211,46 @@ const Home = ({ user }) => {
             <h4>Select an Emoji:</h4>
             <div>
               <button
-                className={`emoji-button ${selectedEmoji === 'happy' ? 'selected' : ''}`}
-                onClick={() => handleEmojiChange('happy')}
+                className={`emoji-button ${
+                  selectedEmoji === "happy" ? "selected" : ""
+                }`}
+                onClick={() => handleEmojiChange("happy")}
                 type="button"
               >
                 😊
               </button>
               <button
-                className={`emoji-button ${selectedEmoji === 'sad' ? 'selected' : ''}`}
-                onClick={() => handleEmojiChange('sad')}
+                className={`emoji-button ${
+                  selectedEmoji === "sad" ? "selected" : ""
+                }`}
+                onClick={() => handleEmojiChange("sad")}
                 type="button"
               >
                 😢
               </button>
               <button
-                className={`emoji-button ${selectedEmoji === 'angry' ? 'selected' : ''}`}
-                onClick={() => handleEmojiChange('angry')}
+                className={`emoji-button ${
+                  selectedEmoji === "angry" ? "selected" : ""
+                }`}
+                onClick={() => handleEmojiChange("angry")}
                 type="button"
               >
                 😡
               </button>
               <button
-                className={`emoji-button ${selectedEmoji === 'fearful' ? 'selected' : ''}`}
-                onClick={() => handleEmojiChange('fearful')}
+                className={`emoji-button ${
+                  selectedEmoji === "fearful" ? "selected" : ""
+                }`}
+                onClick={() => handleEmojiChange("fearful")}
                 type="button"
               >
                 😨
               </button>
               <button
-                className={`emoji-button ${selectedEmoji === 'surprised' ? 'selected' : ''}`}
-                onClick={() => handleEmojiChange('surprised')}
+                className={`emoji-button ${
+                  selectedEmoji === "surprised" ? "selected" : ""
+                }`}
+                onClick={() => handleEmojiChange("surprised")}
                 type="button"
               >
                 😮
@@ -223,36 +285,46 @@ const Home = ({ user }) => {
             />
             <div>
               <button
-                className={`emoji-button ${customEmoji === 'happy' ? 'selected' : ''}`}
-                onClick={() => handleCustomEmojiChange('happy')}
+                className={`emoji-button ${
+                  customEmoji === "happy" ? "selected" : ""
+                }`}
+                onClick={() => handleCustomEmojiChange("happy")}
                 type="button"
               >
                 😊
               </button>
               <button
-                className={`emoji-button ${customEmoji === 'sad' ? 'selected' : ''}`}
-                onClick={() => handleCustomEmojiChange('sad')}
+                className={`emoji-button ${
+                  customEmoji === "sad" ? "selected" : ""
+                }`}
+                onClick={() => handleCustomEmojiChange("sad")}
                 type="button"
               >
                 😢
               </button>
               <button
-                className={`emoji-button ${customEmoji === 'angry' ? 'selected' : ''}`}
-                onClick={() => handleCustomEmojiChange('angry')}
+                className={`emoji-button ${
+                  customEmoji === "angry" ? "selected" : ""
+                }`}
+                onClick={() => handleCustomEmojiChange("angry")}
                 type="button"
               >
                 😡
               </button>
               <button
-                className={`emoji-button ${customEmoji === 'fearful' ? 'selected' : ''}`}
-                onClick={() => handleCustomEmojiChange('fearful')}
+                className={`emoji-button ${
+                  customEmoji === "fearful" ? "selected" : ""
+                }`}
+                onClick={() => handleCustomEmojiChange("fearful")}
                 type="button"
               >
                 😨
               </button>
               <button
-                className={`emoji-button ${customEmoji === 'surprised' ? 'selected' : ''}`}
-                onClick={() => handleCustomEmojiChange('surprised')}
+                className={`emoji-button ${
+                  customEmoji === "surprised" ? "selected" : ""
+                }`}
+                onClick={() => handleCustomEmojiChange("surprised")}
                 type="button"
               >
                 😮
@@ -263,9 +335,14 @@ const Home = ({ user }) => {
             type="date"
             name="date"
             placeholder="Date"
-            value={newEntry.date}
+            value={
+              newEntry.date
+                ? new Date(newEntry.date).toISOString().substring(0, 10)
+                : ""
+            }
             onChange={handleInputChange}
           />
+
           <textarea
             name="body"
             placeholder="Journal Entry"
@@ -276,9 +353,15 @@ const Home = ({ user }) => {
             Add Entry
           </button>
         </form>
+      </div> */}
+
+      <div>
+        <Dashboard
+          user={user}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
       </div>
-      <Link to="/anonymous-messages">Write/Request Nice Messages</Link>
-      <HypeserverDatepicker />
     </div>
   );
 };

@@ -29,7 +29,7 @@ function MyCustomAutoFocusPlugin() {
 
 
 
-export const Editor = ({user}) => {
+export const Editor = ({user, prompt}) => {
   const onError = (error) => {
       console.error(error);
   }
@@ -76,6 +76,7 @@ export const Editor = ({user}) => {
     try {
       const entryRef = await addDoc(collection(db, 'entries'), {
         body: text,
+        prompt: prompt,
         created_at: serverTimestamp(),
         userId: user.uid
       });
@@ -83,12 +84,15 @@ export const Editor = ({user}) => {
     } catch(error) {
       console.log("unable to save entry: ", error)
     }
-    
   }
-
+  const renderPrompt = () => {
+    if (prompt) {
+      return <div className="prompt-container">{prompt}</div>
+    }
+  }
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div>This is a beautiful prompt</div>
+      {renderPrompt()}
       <div className="editor-container">
         <PlainTextPlugin
           contentEditable={<ContentEditable className="editor-input" />}

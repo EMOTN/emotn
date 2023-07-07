@@ -16,8 +16,19 @@ export const NewEntryPrompt = () => {
         fetchRandomPrompt()
     }, [])
 
+
+    //this grabs the prompt and passes it as a url query parameter in App.js as otherwise there's no access to it because of the absence of the redux store
     const handleClick = () => {
-        navigate("/new-journal-entry")
+        let url = "/new-journal-entry"
+        if (prompt) {
+            let encodedPrompt = encodeURIComponent(prompt)
+            url += "?prompt=" + encodedPrompt
+        }
+        navigate(url)
+    }
+
+    const handleClickWithoutPrompt = () => {
+       navigate("/new-journal-entry")
     }
 
     return (
@@ -25,7 +36,7 @@ export const NewEntryPrompt = () => {
             <h3>{prompt}</h3>
             <button onClick={handleClick}>Answer</button>
             <p>or</p>
-            <button>I prefer to start with a blank page</button>
+            <button onClick={handleClickWithoutPrompt}>I prefer to start with a blank page</button>
         </div>
     )
 }
