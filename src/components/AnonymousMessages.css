@@ -47,17 +47,22 @@
 }
 
 .favorited-messages {
-  overflow-y: scroll; /* Enable vertical scrolling on favorited-messages section */
-  height: 350px; /* Set the maximum height for scrolling */
+  overflow-y: scroll;
+  height: 350px;
 }
 
 .favorited-messages::-webkit-scrollbar {
-  width: 6px; /* Set the width of the scrollbar */
-  background-color: transparent; /* Set the background color of the scrollbar */
+  width: 8px;
+}
+
+.favorited-messages::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: transparent;
 }
 
 .favorited-messages::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Set the color of the scrollbar thumb */
+  border-radius: 8px;
+  background-color: #8b9474;
 }
 
 .message-container {
