@@ -79,20 +79,30 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
             </div>
             {entries.length > 0 ? (
               <div className="entries">
-                <div key={entries[0].id}>
-                  <p className="entryLabel">
-                    <b>Date:</b>{" "}
-                    {toDate(entries[0].date.toDate()).toLocaleDateString()}
-                  </p>
-                  <p className="entryLabel">
-                    <b>Mood:</b> {entries[0].mood}
-                  </p>
-                  <p className="entryBody">{entries[0].body}</p>
-                </div>
-                {/* {entries.length > 1 && (
-                  <p>There are additional entries for the selected date.</p>
-                )} */}
-                <hr></hr>
+                {entries.map((entry) => (
+                  <div key={entry.id}>
+                    <span style={{ display: "block" }}>
+                      <b>Date:</b>{" "}
+                      {toDate(entry.date.toDate()).toLocaleDateString()}
+                    </span>
+
+                    <span style={{ display: "block" }}>
+                      <b>Mood:</b> {entry.mood}
+                    </span>
+                    <span style={{ display: "block" }}>
+                      <b>Prompt:</b> {entry.prompt}
+                    </span>
+                    <div
+                      className="entryBody"
+                      dangerouslySetInnerHTML={{
+                        __html: entry.body
+                          .replace(/^<p>/, "")
+                          .replace(/<\/p>$/, ""),
+                      }}
+                    />
+                    <hr></hr>
+                  </div>
+                ))}
               </div>
             ) : (
               <p>No entries available for the selected date.</p>
