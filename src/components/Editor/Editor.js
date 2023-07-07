@@ -230,7 +230,7 @@ const Editor = ({ user, prompt }) => {
       );
 
       // Convert the adjusted date to a Firestore Timestamp
-      const selectedTimestamp = Timestamp.fromDate(adjustedDate.toDate());
+      const selectedTimestamp = Timestamp.now();
 
       const entryRef = await addDoc(collection(db, "entries"), {
         ...newEntry,
@@ -452,7 +452,7 @@ const Editor = ({ user, prompt }) => {
             </button>
           </div>
         </div>
-        <input
+        {/* <input
           type="date"
           name="date"
           placeholder="Date"
@@ -462,7 +462,7 @@ const Editor = ({ user, prompt }) => {
               : ""
           }
           onChange={handleInputChange}
-        />
+        /> */}
 
         <ReactQuill
           value={newEntry.body}
