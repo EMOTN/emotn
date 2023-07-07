@@ -203,7 +203,7 @@ const AnonymousMessages = ({ user }) => {
       {favoritedMessages.length > 0 && (
         <div className="favorited-messages-container">
           <h3 className="titleFavorite">My Favorite Messages</h3>
-          <div className="favorited-messages">
+          <div className="favorited-messages" style={{ textAlign: "left" }}>
             {favoritedMessages.map((message) => (
               <div key={message} className="message-container">
                 <p className="message">💟{message}</p>

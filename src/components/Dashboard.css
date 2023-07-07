@@ -1,9 +1,12 @@
-body {
-  background-color: #c1cc99;
-}
-
 .dashboard {
   height: 100%;
+  background-color: #c1cc99;
+}
+.welcomeMessage {
+  text-align: left;
+  margin-left: 65px;
+  margin-top: 30px;
+  background-color: #c1cc99;
 }
 
 /* left coloumn style */
@@ -45,6 +48,10 @@ body {
 .button-container {
   display: flex;
   justify-content: center;
+}
+
+.entries {
+  text-align: left;
 }
 
 /*Right Column Styling */

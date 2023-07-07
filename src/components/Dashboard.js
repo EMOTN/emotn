@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { db } from "../config/firebase";
+import { db, auth } from "../config/firebase";
 import {
   collection,
   addDoc,
@@ -23,6 +23,7 @@ import "./Dashboard.css";
 
 const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
   const [entries, setEntries] = useState([]);
+  const [firstName, setFirstName] = useState("");
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -58,8 +59,37 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
     setSelectedDate(date);
   };
 
+  const fetchUser = async () => {
+    try {
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        setFirstName(userData.firstName);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [user]);
+
   return (
     <div className="dashboard">
+      <div
+        className="welcomeMessage"
+        style={{
+          textAlign: "left",
+
+          marginLeft: "65px",
+        }}
+      >
+        <h1>Welcome to Your Journal {firstName}!</h1>
+        <button onClick={() => auth.signOut()}>Log Out</button>
+      </div>
       <div className="row">
         <div className="col-md-6">
           <div className="leftColumn">
@@ -89,13 +119,13 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                   </p>
                   <p className="entryBody">{entries[0].body}</p>
                 </div>
-                {/* {entries.length > 1 && (
-                  <p>There are additional entries for the selected date.</p>
-                )} */}
+
                 <hr></hr>
               </div>
             ) : (
-              <p>No entries available for the selected date.</p>
+              <p className="no-entries" style={{ textAlign: "left" }}>
+                No entries available for the selected date.
+              </p>
             )}
           </div>
         </div>
