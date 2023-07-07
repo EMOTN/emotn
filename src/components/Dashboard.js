@@ -81,17 +81,17 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
               <div className="entries">
                 {entries.map((entry) => (
                   <div key={entry.id}>
-                    <p className="entryLabel">
+                    <span style={{ display: "block" }}>
                       <b>Date:</b>{" "}
                       {toDate(entry.date.toDate()).toLocaleDateString()}
-                    </p>
+                    </span>
 
-                    <p className="entryLabel">
+                    <span style={{ display: "block" }}>
                       <b>Mood:</b> {entry.mood}
-                    </p>
-                    <p className="entryLabel">
+                    </span>
+                    <span style={{ display: "block" }}>
                       <b>Prompt:</b> {entry.prompt}
-                    </p>
+                    </span>
                     <div
                       className="entryBody"
                       dangerouslySetInnerHTML={{
