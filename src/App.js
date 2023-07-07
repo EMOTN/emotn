@@ -1,11 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { auth, db } from './config/firebase';
-import { useNavigate, Routes, Route } from 'react-router-dom';
+import { useNavigate, Routes, Route, useLocation } from 'react-router-dom';
 import Auth from './components/auth';
 import Home from './components/home';
 import CreateUserProfile from './components/CreateUserProfile';
 import AnonymousMessages from './components/AnonymousMessages'; // Import the component for anonymous messaging
 import { doc, getDoc } from 'firebase/firestore';
+import Editor from './components/Editor/Editor';
+
+function useQuery() {
+  const { search } = useLocation();
+
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
 
 function App() {
   const [user, setUser] = useState(null); // Track user authentication status
@@ -31,6 +38,8 @@ function App() {
     };
   }, []);
 
+  let query = useQuery()
+
   if (!user) {
     return <Auth />;
   }
@@ -41,6 +50,7 @@ function App() {
         <Route path="/" element={profileCreated ? <Home user={user} /> : <CreateUserProfile user={user} setProfileCreated={setProfileCreated} />} />
         <Route path="/createUserProfile" element={<CreateUserProfile user={user} setProfileCreated={setProfileCreated} />} />
         <Route path="/anonymous-messages" element={<AnonymousMessages user={user} />} /> 
+        <Route path="/new-journal-entry" element={<Editor user={user} prompt={query.get("prompt")} />} /> 
       </Routes>
     </div>
   );
