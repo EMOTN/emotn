@@ -1,118 +1,8 @@
-// import {$getRoot, $getSelection} from 'lexical';
-// import {useEffect, useState, useRef} from 'react';
-// import './editor.css';
-
-// import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-// import {LexicalComposer} from '@lexical/react/LexicalComposer';
-// import {PlainTextPlugin} from '@lexical/react/LexicalPlainTextPlugin';
-// import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-// import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-// import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
-// import {OnChangePlugin} from '@lexical/react/LexicalOnChangePlugin';
-
-// import { db } from '../../config/firebase';
-// import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-// import {useNavigate} from 'react-router-dom';
-
-// function MyCustomAutoFocusPlugin() {
-//     const [editor] = useLexicalComposerContext();
-
-//     useEffect(() => {
-//       // Focus the editor when the effect fires!
-//       editor.focus();
-//     }, [editor]);
-
-//     return null;
-//   }
-
-// export const Editor = ({user, prompt}) => {
-//   const onError = (error) => {
-//       console.error(error);
-//   }
-//   const navigate = useNavigate();
-//   const [isButtonOn, setIsButtonOn] = useState(false)
-
-//   const myTheme = {
-//     ltr: "ltr",
-//     rtl: "rtl",
-//     placeholder: "editor-placeholder",
-//     paragraph: "editor-paragraph"
-//   };
-
-//   const initialConfig = {
-//     namespace: 'MyEditor',
-//     theme: myTheme,
-//     onError,
-//   };
-
-//   const editorStateRef = useRef();
-
-//   const onChange = (editorState) => {
-//     editorStateRef.current = editorState
-//     editorState.read(() => {
-//       const text = $getRoot().getTextContent()
-//       if (text.length > 0) {
-//         setIsButtonOn(true)
-//       } else {
-//         setIsButtonOn(false)
-//       }
-//     })
-//   }
-
-//   const handleSave = () => {
-//     if (!editorStateRef.current) { return }
-
-//     editorStateRef.current.read(() => {
-//       const text = $getRoot().getTextContent()
-//       persistToFirebase(text)
-//     })
-//   }
-
-//   const persistToFirebase = async (text) => {
-//     try {
-//       const entryRef = await addDoc(collection(db, 'entries'), {
-//         body: text,
-//         prompt: prompt,
-//         created_at: serverTimestamp(),
-//         userId: user.uid
-//       });
-//       navigate("/")
-//     } catch(error) {
-//       console.log("unable to save entry: ", error)
-//     }
-//   }
-//   const renderPrompt = () => {
-//     if (prompt) {
-//       return <div className="prompt-container">{prompt}</div>
-//     }
-//   }
-//   return (
-//     <LexicalComposer initialConfig={initialConfig}>
-//       {renderPrompt()}
-//       <div className="editor-container">
-//         <PlainTextPlugin
-//           contentEditable={<ContentEditable className="editor-input" />}
-//           // placeholder={<div>Enter some text...</div>}
-//           ErrorBoundary={LexicalErrorBoundary}
-//         />
-//         <MyCustomAutoFocusPlugin />
-//         <HistoryPlugin />
-//         <OnChangePlugin onChange={onChange} />
-//       </div>
-//       <button onClick={handleSave} disabled={isButtonOn === false}>Save Entry</button>
-//     </LexicalComposer>
-//   );
-// }
-
-// export default Editor
-
 import { useState, useEffect } from "react";
-import { auth, db } from "../../config/firebase";
+import { db } from "../../config/firebase";
 import moment from "moment";
 import {
   Timestamp,
-  selectedTimestamp,
-  serverTimestamp,
   collection,
   query,
   where,
@@ -124,12 +14,10 @@ import {
   arrayRemove,
   getDoc,
   arrayUnion,
-  setDoc,
 } from "firebase/firestore";
 
-import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import NewEntryPrompt from "../prompt";
+import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./editor.css";
@@ -143,6 +31,7 @@ const Editor = ({ user, prompt }) => {
   const [customEmoji, setCustomEmoji] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [firstName, setFirstName] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -246,7 +135,7 @@ const Editor = ({ user, prompt }) => {
       await updateDoc(userRef, {
         entries: arrayUnion({
           id: entryId,
-          mood: selectedMood || customMood,
+          // mood: selectedMood || customMood,
           date: selectedTimestamp,
           body: newEntry.body.replace(/^<p>/, "").replace(/<\/p>$/, ""),
           prompt: prompt,
@@ -262,9 +151,9 @@ const Editor = ({ user, prompt }) => {
           prompt: prompt,
         },
       ]);
-      setNewEntry({ mood: "", date: "", body: "", prompt: "" });
+      // setNewEntry({ mood: "", date: "", body: "", prompt: "" });
       setSelectedMood("");
-      setCustomMood("");
+      // setCustomMood("");
       setSelectedEmoji("");
       setCustomEmoji("");
     } catch (error) {
@@ -281,17 +170,17 @@ const Editor = ({ user, prompt }) => {
     setCustomMood(e.target.value);
   };
 
-  const handleCustomEmojiChange = (emoji) => {
-    setCustomEmoji(emoji);
+  const handleBackToDashboard = () => {
+    navigate("/");
   };
 
-  const moodOptions = {
-    happy: ["Excited", "Joyful", "Content", "Energetic"],
-    sad: ["Melancholy", "Gloomy", "Heartbroken", "Lonely"],
-    angry: ["Furious", "Annoyed", "Frustrated", "Resentful"],
-    fearful: ["Afraid", "Nervous", "Anxious", "Terrified"],
-    surprised: ["Amazed", "Shocked", "Astounded", "Speechless"],
-  };
+  // const moodOptions = {
+  //   happy: ["Excited", "Joyful", "Content", "Energetic"],
+  //   sad: ["Melancholy", "Gloomy", "Heartbroken", "Lonely"],
+  //   angry: ["Furious", "Annoyed", "Frustrated", "Resentful"],
+  //   fearful: ["Afraid", "Nervous", "Anxious", "Terrified"],
+  //   surprised: ["Amazed", "Shocked", "Astounded", "Speechless"],
+  // };
 
   const fetchUser = async () => {
     try {
@@ -326,9 +215,9 @@ const Editor = ({ user, prompt }) => {
 
   return (
     <div>
-      {renderPrompt()}
+      <div className="prompt">{renderPrompt()}</div>
       <form onSubmit={addEntry}>
-        <div>
+        {/* <div>
           <h4>Select an Emoji:</h4>
           <div>
             <button
@@ -449,9 +338,9 @@ const Editor = ({ user, prompt }) => {
               type="button"
             >
               😮
-            </button>
-          </div>
-        </div>
+            </button> */}
+        {/* </div> */}
+        {/* </div> */}
         {/* <input
           type="date"
           name="date"
@@ -467,11 +356,15 @@ const Editor = ({ user, prompt }) => {
         <ReactQuill
           value={newEntry.body}
           onChange={handleBodyChange}
-          placeholder="Journal Entry"
+          placeholder="Begin your writing journey here"
         />
-        <button type="submit" disabled={!selectedMood && !customMood}>
-          Add Entry
-        </button>
+        {/* disabled={!selectedMood && !customMood }*/}
+        <div className="buttonTime">
+          <button type="submit">Add Entry</button>
+          <button type="button" onClick={handleBackToDashboard}>
+            Back to Dashboard
+          </button>
+        </div>
       </form>
     </div>
   );

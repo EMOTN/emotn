@@ -108,8 +108,17 @@
 }
 
 .message-box {
-  background-color: #c1cc99;
-  border: 2px solid #8b9474;
+  background-color: rgba(168, 170, 163, 0.5);
+  border: solid #8b9474;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 10px;
   margin-bottom: 20px;
+}
+
+.send-message {
+  width: 500px;
+  height: 150px;
+  background-color: rgba(168, 170, 163, 0.5);
+  border: solid #8b9474;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }

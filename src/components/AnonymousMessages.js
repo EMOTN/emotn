@@ -147,22 +147,26 @@ const AnonymousMessages = ({ user }) => {
 
       {sendPopup && (
         <div className="popup">
-          <div className="popup-content" style={{ backgroundColor: "#8BBD8B" }}>
+          <div
+            className="popup-content"
+            style={{
+              backgroundColor: "#dbf3e0",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <h4 style={{ textAlign: "center" }}>
               You found an empty bottle! Looks pretty airtight. Maybe you could
               send somebody a message...
             </h4>
             <form onSubmit={handleNiceMessageSubmit}>
               <textarea
+                className="send-message"
                 name="message"
                 placeholder="Write a nice message and brighten somebody's day ..."
                 value={messageInput}
                 onChange={(e) => setMessageInput(e.target.value)}
-                style={{
-                  width: "745px",
-                  height: "150px",
-                  backgroundColor: "#c1cc99",
-                }}
               />
               <div className="submitPopUpButton">
                 <p>
@@ -177,7 +181,7 @@ const AnonymousMessages = ({ user }) => {
 
       {receivePopup && (
         <div className="popup">
-          <div className="popup-content" style={{ backgroundColor: "#8BBD8B" }}>
+          <div className="popup-content" style={{ backgroundColor: "#dbf3e0" }}>
             <h4 style={{ textAlign: "center" }}>
               Oh! You found a bottle! There seems to be a message inside!
             </h4>
@@ -206,7 +210,7 @@ const AnonymousMessages = ({ user }) => {
           <div className="favorited-messages">
             {favoritedMessages.map((message) => (
               <div key={message} className="message-container">
-                <p className="message">💟{message}</p>
+                <p className="message">🏵️{message}</p>
                 <button
                   onClick={() => handleUnfavoriteMessage(message)}
                   className="unfavorite-button"
