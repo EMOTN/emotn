@@ -17,7 +17,19 @@ function useQuery() {
 function App() {
   const [user, setUser] = useState(null); // Track user authentication status
   const [profileCreated, setProfileCreated] = useState(false); // Track user profile creation status
+  const [selectedMood, setSelectedMood] = useState('');
+  const [customMood, setCustomMood] = useState('');
+  const [customEmoji, setCustomEmoji] = useState('');
   const navigate = useNavigate();
+
+  const handleCustomMoodChange = (e) => {
+    setCustomMood(e.target.value);
+  };
+
+  const handleCustomEmojiChange = (emoji) => {
+    setCustomEmoji(emoji);
+  };
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -49,8 +61,14 @@ function App() {
       <Routes>
         <Route path="/" element={profileCreated ? <Home user={user} /> : <CreateUserProfile user={user} setProfileCreated={setProfileCreated} />} />
         <Route path="/createUserProfile" element={<CreateUserProfile user={user} setProfileCreated={setProfileCreated} />} />
-        <Route path="/anonymous-messages" element={<AnonymousMessages user={user} />} /> 
-        <Route path="/new-journal-entry" element={<Editor user={user} prompt={query.get("prompt")} />} /> 
+        <Route path="/anonymous-messages" element={<AnonymousMessages user={user} />} />
+        <Route path="/new-journal-entry" element={<Editor
+  user={user}
+  prompt={query.get("prompt")}
+  setSelectedMood={setSelectedMood}
+  handleCustomMoodChange={handleCustomMoodChange}
+  handleCustomEmojiChange={handleCustomEmojiChange}
+/>} />
       </Routes>
     </div>
   );
