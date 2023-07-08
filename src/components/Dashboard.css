@@ -67,6 +67,30 @@ body {
   height: 700px;
 }
 
+.entry-header {
+  position: relative;
+}
+
+.entry-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.entry:hover .entry-delete {
+  opacity: 1;
+}
+
+.deleteButton {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 /* react calendar styles */
 
 .react-calendar {

@@ -31,6 +31,7 @@ const Editor = ({ user, prompt }) => {
   const [customEmoji, setCustomEmoji] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [firstName, setFirstName] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -156,6 +157,7 @@ const Editor = ({ user, prompt }) => {
       // setCustomMood("");
       setSelectedEmoji("");
       setCustomEmoji("");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -171,7 +173,13 @@ const Editor = ({ user, prompt }) => {
   };
 
   const handleBackToDashboard = () => {
-    navigate("/");
+    if (
+      window.confirm(
+        "Are you sure you want to go back to the dashboard? Any unsaved changes will be lost."
+      )
+    ) {
+      navigate("/");
+    }
   };
 
   // const moodOptions = {

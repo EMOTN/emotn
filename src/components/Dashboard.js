@@ -13,6 +13,7 @@ import {
   doc,
   getDoc,
   arrayRemove,
+  deleteDoc,
 } from "firebase/firestore";
 import { toDate, startOfDay, endOfDay } from "date-fns";
 import AnonymousMessages from "./AnonymousMessages";
@@ -77,6 +78,18 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
     fetchUser();
   }, [user]);
 
+  const deleteEntry = async (id) => {
+    try {
+      const entryDoc = doc(db, "entries", id);
+      await deleteDoc(entryDoc);
+      setEntries((prevEntries) =>
+        prevEntries.filter((entry) => entry.id !== id)
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="dashboard">
       <div className="row">
@@ -84,13 +97,13 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
           <div className="downward">
             <div style={{ marginLeft: "65px" }}>
               <h1>Welcome to Your Journal {firstName}!</h1>
-              {/* <button onClick={() => auth.signOut()}>Log Out</button> */}
             </div>
             <div className="entryButton">
               <Popup
                 trigger={
                   <div className="button-container">
                     <button>Let's Start Writing!⚡️</button>
+                    <button onClick={() => auth.signOut()}>Log Out</button>
                   </div>
                 }
                 modal
@@ -104,12 +117,21 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
               {entries.length > 0 ? (
                 <div className="entries">
                   {entries.map((entry) => (
-                    <div key={entry.id}>
-                      <span style={{ display: "block" }}>
-                        <b>Date:</b>{" "}
-                        {toDate(entry.date.toDate()).toLocaleDateString()}
-                      </span>
-
+                    <div key={entry.id} className="entry">
+                      <div className="entry-header">
+                        <span className="entry-date">
+                          <b>Date:</b>{" "}
+                          {toDate(entry.date.toDate()).toLocaleDateString()}
+                        </span>
+                        <span className="entry-delete">
+                          <button
+                            className="deleteButton"
+                            onClick={() => deleteEntry(entry.id)}
+                          >
+                            X
+                          </button>
+                        </span>
+                      </div>
                       <span style={{ display: "block" }}>
                         <b>Mood:</b> {entry.mood}
                       </span>
