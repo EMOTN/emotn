@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./editor.css";
+import EditorToolbar, { modules, formats } from "./EditorToolbar";
 
 const Editor = ({ user, prompt }) => {
   const [entries, setEntries] = useState([]);
@@ -360,11 +361,13 @@ const Editor = ({ user, prompt }) => {
           }
           onChange={handleInputChange}
         /> */}
-
+        <EditorToolbar />
         <ReactQuill
           value={newEntry.body}
           onChange={handleBodyChange}
           placeholder="Begin your writing journey here"
+          modules={modules}
+          formats={formats}
         />
         {/* disabled={!selectedMood && !customMood }*/}
         <div className="buttonTime">
