@@ -59,7 +59,7 @@ function ResponsiveAppBar() {
     { title: "Home", path: "/home" },
     {
       title: isLoggedIn ? "Dashboard" : "Log In/Sign Up",
-      path: isLoggedIn ? "/dashboard" : "/login",
+      path: isLoggedIn ? "/Dashboard" : "/login",
     },
   ];
 

@@ -24,8 +24,9 @@ import { auth, googleProvider, db } from "../config/firebase";
 
 import SignUpForm from "./SignUpForm";
 
-function SignInForm() {
-  const navigate = useNavigate();
+const SignInForm = () => {
+  const navigate = useNavigate(); // Initialize the navigate variable
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -39,7 +40,7 @@ function SignInForm() {
       const userRef = doc(db, "users", auth.currentUser.uid);
       const docSnap = await getDoc(userRef);
       if (docSnap.exists() && docSnap.data().profileCreated) {
-        navigate("/"); // Redirect to the home page
+        navigate("/dashboard"); // Redirect to the user's dashboard
       } else {
         navigate("/createUserProfile"); // Redirect to the create profile page
       }
@@ -66,7 +67,7 @@ function SignInForm() {
 
       // Check if the user's profile is already created
       if (docSnap.exists() && docSnap.data().profileCreated) {
-        navigate("/"); // Redirect to the home page
+        navigate("/dashboard"); // Redirect to the home page
       } else {
         navigate("/createUserProfile"); // Redirect to the create profile page
       }
@@ -157,6 +158,6 @@ function SignInForm() {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default SignInForm;

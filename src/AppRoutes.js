@@ -72,19 +72,19 @@ function AppRoutes({
           }
         />
 
-        <Route
-          path="/"
-          element={
-            profileCreated ? (
-              <Home user={user} />
-            ) : (
+        {profileCreated ? (
+          <Route path="/" element={<Dashboard user={user} />} />
+        ) : (
+          <Route
+            path="/"
+            element={
               <CreateUserProfile
                 user={user}
                 setProfileCreated={setProfileCreated}
               />
-            )
-          }
-        />
+            }
+          />
+        )}
 
         <Route
           path="/createUserProfile"
@@ -112,10 +112,11 @@ function AppRoutes({
             element={
               <Dashboard
                 user={user}
+                profileCreated={profileCreated} // Pass the profileCreated prop to the Dashboard component
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
               />
-            } // Pass the selectedDate function as a prop to the Dashboard component
+            }
             onClick={() => handleProtectedRouteAccess("/dashboard")}
           />
         )}

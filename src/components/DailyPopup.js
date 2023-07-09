@@ -1,19 +1,62 @@
 import React, { useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "../config/firebase";
 
 const DailyPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
-    setIsOpen(true); // Set isOpen to true when the component is mounted
+    const checkFirstLoginOfDay = async () => {
+      // Check if the user is logged in
+      if (auth.currentUser) {
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(userRef);
+        const lastLoginTimestamp = docSnap.data()?.lastLoginTimestamp;
+
+        // Get the current timestamp
+        const currentTimestamp = new Date().getTime();
+
+        // Check if the user has logged in today
+        if (lastLoginTimestamp !== currentTimestamp && !isInitialRender) {
+          // Delay the opening of the popup for the animation to take effect
+          setTimeout(() => {
+            setIsOpen(true);
+          }, 100);
+
+          // Update the last login timestamp in the database
+          await setDoc(
+            userRef,
+            {
+              lastLoginTimestamp: currentTimestamp,
+            },
+            { merge: true }
+          );
+        }
+      }
+
+      setIsInitialRender(false);
+    };
+
+    // Check first login of the day when the component mounts
+    checkFirstLoginOfDay();
+
+    // Listen for changes in the authentication state
+    const unsubscribe = onAuthStateChanged(auth, checkFirstLoginOfDay);
 
     return () => {
-      setIsOpen(false); // Set isOpen to false when the component is unmounted
+      unsubscribe(); // Clean up the listener
     };
-  }, []);
+  }, [isInitialRender]);
 
   const closePopup = () => {
     setIsOpen(false);
   };
+
+  if (!isOpen) {
+    return null; // Don't render anything if the popup is not open
+  }
 
   return (
     <div
@@ -30,6 +73,7 @@ const DailyPopup = () => {
         padding: "1rem",
         borderRadius: "5px",
         border: "2px solid #8b9474",
+        animation: isOpen ? "fly-in 10s" : "none",
       }}
     >
       <div style={{ flex: "0 0 auto", marginLeft: "1rem" }}>
