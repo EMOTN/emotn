@@ -101,12 +101,20 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
 
   const updateEntry = async (updatedEntry) => {
     try {
-      const entryDoc = doc(db, "entries", updatedEntry.id);
-      await updateDoc(entryDoc, updatedEntry);
+      const { id, prompt, ...entryData } = updatedEntry; // Exclude prompt from entry data
+
+      const entryDoc = doc(db, "entries", id);
+
+      if (prompt !== undefined) {
+        entryData.prompt = prompt; // Add prompt to entryData if it is defined
+      }
+
+      await updateDoc(entryDoc, entryData); // Update entry using entryData
+
       setEntries((prevEntries) =>
         prevEntries.map((entry) => {
           if (entry.id === updatedEntry.id) {
-            return { ...entry, ...updatedEntry };
+            return { ...entry, ...entryData };
           }
           return entry;
         })
@@ -123,7 +131,7 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
       <div className="row">
         <div className="col-md-6">
           <div className="downward">
-            <div style={{ marginLeft: "65px" }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <h1>Welcome to Your Journal {firstName}!</h1>
             </div>
             <div className="entryButton">
