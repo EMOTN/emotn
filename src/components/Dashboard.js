@@ -131,7 +131,6 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                 trigger={
                   <div className="button-container">
                     <button>Let's Start Writing!⚡️</button>
-                    <button onClick={() => auth.signOut()}>Log Out</button>
                   </div>
                 }
                 modal
