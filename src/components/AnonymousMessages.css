@@ -76,10 +76,17 @@
 }
 
 .unfavorite-button {
+  visibility: hidden;
   background: transparent;
   border: none;
   cursor: pointer;
   margin-left: auto; /* Push the button to the right */
+  box-shadow: none; /* Remove box shadow */
+  outline: none; /* Remove outline */
+}
+
+.message-container:hover .unfavorite-button {
+  visibility: visible; /* Show the button on hover */
 }
 
 .container {
