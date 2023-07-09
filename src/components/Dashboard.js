@@ -136,7 +136,7 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "30px 0",
+                padding: "1px 30px 0",
               }}
             >
               <h1 style={{ marginRight: "auto" }}>
