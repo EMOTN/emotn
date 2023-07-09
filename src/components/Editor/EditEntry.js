@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ReactQuill from "react-quill";
-
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 
 const EditEntry = ({ entry, updateEntry, closePopup }) => {
@@ -39,25 +38,30 @@ const EditEntry = ({ entry, updateEntry, closePopup }) => {
     return null;
   };
 
+  const editEntryRef = useRef(null);
+
   return (
     <div
       className="editEntry"
+      ref={editEntryRef}
       style={{
-        width: "100%",
-        height: "auto",
+        width: "100%", // Set the width to 100% to fit the popup
+        height: "100%",
         backgroundColor: "#c1cc99",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        padding: "15px",
+        overflow: "hidden", // Prevent overflow
       }}
     >
-      <div className="prompt">{renderPrompt()}</div>
+      <div className="prompt" style={{ maxWidth: "100%" }}>
+        {renderPrompt()}
+      </div>
       <EditorToolbar />
 
       <div
         style={{
-          width: "100%",
+          width: "100%", // Set the width to 100% to fit the popup
           display: "flex",
           justifyContent: "center",
         }}
@@ -68,7 +72,7 @@ const EditEntry = ({ entry, updateEntry, closePopup }) => {
           modules={modules}
           formats={formats}
           style={{
-            width: "100%",
+            width: "100%", // Set the width to 100% to fit the container
             height: "100%",
             border: "none",
             outline: "none",
@@ -77,7 +81,12 @@ const EditEntry = ({ entry, updateEntry, closePopup }) => {
       </div>
 
       <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "1rem",
+          marginBottom: "10px",
+        }}
       >
         <button onClick={handleUpdate}>Update</button>
         <button onClick={handleCancel}>Cancel</button>

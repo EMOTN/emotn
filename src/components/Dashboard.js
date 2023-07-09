@@ -208,6 +208,7 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                           }
                           modal
                           open={editMode} // Set the initial state of editMode to true
+                          contentStyle={{ width: "1400px" }} // Adjust the width and maxWidth as needed
                         >
                           <div>
                             <EditEntry
