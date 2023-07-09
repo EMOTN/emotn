@@ -22,6 +22,7 @@ import NewEntryPrompt from "./prompt";
 import Popup from "reactjs-popup";
 import "./Dashboard.css";
 import EditEntry from "./Editor/EditEntry";
+import DailyPopup from "./DailyPopup";
 
 const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
   const [entries, setEntries] = useState([]);
@@ -186,9 +187,7 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                             <div
                               className="editEntryButton"
                               onClick={() => editEntry(entry)} // Add onClick event to emoji
-                            >
-                              🖉
-                            </div>
+                            ></div>
                           }
                           modal
                           open={editMode} // Set the initial state of editMode to true
@@ -228,6 +227,7 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                   <AnonymousMessages user={user} />
                 </div>
               </div>
+              <DailyPopup />
             </div>
           </div>
         </div>
