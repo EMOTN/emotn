@@ -158,7 +158,7 @@ const Editor = ({ user, prompt }) => {
       // setCustomMood("");
       setSelectedEmoji("");
       setCustomEmoji("");
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       console.error(error);
     }
@@ -179,7 +179,7 @@ const Editor = ({ user, prompt }) => {
         "Are you sure you want to go back to the dashboard? Any unsaved changes will be lost."
       )
     ) {
-      navigate("/");
+      navigate("/dashboard");
     }
   };
 
