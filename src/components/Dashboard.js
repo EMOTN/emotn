@@ -131,22 +131,32 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
       <div className="row">
         <div className="col-md-6">
           <div className="downward">
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <h1>Welcome to Your Journal {firstName}!</h1>
-            </div>
-            <div className="entryButton">
-              <Popup
-                trigger={
-                  <div className="button-container">
-                    <button>Let's Start Writing!⚡️</button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "35px 30px 0",
+              }}
+            >
+              <h1 style={{ marginRight: "auto" }}>
+                Welcome to Your Journal {firstName}!
+              </h1>
+
+              <div className="entryButton">
+                <Popup
+                  trigger={
+                    <div className="button-container">
+                      <button>Let's Start Writing!⚡️</button>
+                    </div>
+                  }
+                  modal
+                >
+                  <div>
+                    <NewEntryPrompt />
                   </div>
-                }
-                modal
-              >
-                <div>
-                  <NewEntryPrompt />
-                </div>
-              </Popup>
+                </Popup>
+              </div>
             </div>
             <div className="leftColumn">
               {entries.length > 0 ? (

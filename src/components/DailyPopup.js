@@ -47,7 +47,7 @@ const DailyPopup = () => {
           Hey, I'm Frogburt. Have a HOPPY time journaling!
         </p>
         <p style={{ textAlign: "right", margin: "0" }}>
-          Don't forget to drink your water!
+          Don't forget to drink your water! *RIBBIT*
         </p>
         <button onClick={closePopup} className="btn btn-primary align-self-end">
           X
