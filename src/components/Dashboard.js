@@ -21,10 +21,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import NewEntryPrompt from "./prompt";
 import Popup from "reactjs-popup";
 import "./Dashboard.css";
+import EditEntry from "./Editor/EditEntry";
 
 const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
   const [entries, setEntries] = useState([]);
   const [firstName, setFirstName] = useState("");
+  const [editedEntry, setEditedEntry] = useState(null);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -90,6 +93,30 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
     }
   };
 
+  const editEntry = (entry) => {
+    setEditedEntry(entry);
+    setEditMode(true);
+  };
+
+  const updateEntry = async (updatedEntry) => {
+    try {
+      const entryDoc = doc(db, "entries", updatedEntry.id);
+      await updateDoc(entryDoc, updatedEntry);
+      setEntries((prevEntries) =>
+        prevEntries.map((entry) => {
+          if (entry.id === updatedEntry.id) {
+            return { ...entry, ...updatedEntry };
+          }
+          return entry;
+        })
+      );
+      setEditedEntry(null);
+      setEditMode(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="dashboard">
       <div className="row">
@@ -130,6 +157,12 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                           >
                             X
                           </button>
+                          <button
+                            className="editButton"
+                            onClick={() => editEntry(entry)}
+                          >
+                            🖉
+                          </button>
                         </span>
                       </div>
                       <span style={{ display: "block" }}>
@@ -146,7 +179,29 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                             .replace(/<\/p>$/, ""),
                         }}
                       />
-                      <hr></hr>
+                      <hr />
+                      {editedEntry && editedEntry.id === entry.id && (
+                        <Popup
+                          trigger={
+                            <div
+                              className="editEntryButton"
+                              onClick={() => editEntry(entry)} // Add onClick event to emoji
+                            >
+                              🖉
+                            </div>
+                          }
+                          modal
+                          open={editMode} // Set the initial state of editMode to true
+                        >
+                          <div>
+                            <EditEntry
+                              entry={editedEntry}
+                              updateEntry={updateEntry}
+                              closePopup={() => setEditMode(false)}
+                            />
+                          </div>
+                        </Popup>
+                      )}
                     </div>
                   ))}
                 </div>
