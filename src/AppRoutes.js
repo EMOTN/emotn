@@ -131,7 +131,13 @@ function AppRoutes({
         />
         <Route
           path="/new-journal-entry"
-          element={<Editor user={user} prompt={query.get("prompt")} />}
+          element={
+            <Editor
+              user={user}
+              mood={query.get("mood")}
+              prompt={query.get("prompt")}
+            />
+          } // added "mood"
         />
       </Routes>
     </>
