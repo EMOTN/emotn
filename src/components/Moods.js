@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Moods = () => {
+export const Moods = ( {onMoodChange} ) => {
   const [selectedEmoji, setSelectedEmoji] = useState('');
   const [selectedMood, setSelectedMood] = useState('');
   const [customMood, setCustomMood] = useState('');
@@ -10,9 +10,19 @@ const Moods = () => {
     setSelectedEmoji(emoji);
   };
 
+  const handleMoodChange = (e) => {
+    setSelectedMood(e.target.value)
+  }
+
   const handleCustomMoodChange = (e) => {
     setCustomMood(e.target.value);
   };
+
+//prioritizes customMood over selectedMood in case they're both selected
+  useEffect(() => {
+    const mood = customMood || selectedMood
+    onMoodChange(mood)
+  }, [selectedMood, customMood, onMoodChange]);
 
   const handleCustomEmojiChange = (emoji) => {
     setCustomEmoji(emoji);
@@ -74,7 +84,7 @@ const Moods = () => {
           <select
             name="mood"
             value={selectedMood}
-            onChange={(e) => setSelectedMood(e.target.value)}
+            onChange={handleMoodChange}
           >
             <option value="">Select Mood</option>
             {moodOptions[selectedEmoji].map((mood) => (
