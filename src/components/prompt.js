@@ -109,9 +109,31 @@ const NewEntryPrompt = () => {
   };
 
 
-  const handleClickWithoutPrompt = () => {
-    navigate('/new-journal-entry');
+  // const handleClickWithoutPrompt = () => {
+  //   navigate('/new-journal-entry');
+  // };
+  const handleClickWithoutPrompt = async () => {
+    const entryData = {
+      prompt: '',
+      mood: selectedMood || customMood,
+      emoji: getEmojiByMood(selectedMood || customMood),
+      // Add other data fields for the entry
+    };
+
+    try {
+      await addDoc(collection(db, 'entries'), entryData);
+      navigate('/new-journal-entry', {
+        state: {
+          mood: selectedMood || customMood,
+          emoji: getEmojiByMood(selectedMood || customMood),
+          prompt: '',
+        },
+      });
+    } catch (error) {
+      console.error('Error adding entry: ', error);
+    }
   };
+
 
   const handleCustomMoodChange = (e) => {
     setCustomMood(e.target.value);
