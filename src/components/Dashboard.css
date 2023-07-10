@@ -8,6 +8,10 @@ body {
 
 /* left coloumn style */
 
+.downward {
+  margin-top: 20px;
+}
+
 .leftColumn {
   background-color: rgba(245, 166, 91, 0.6);
   border: 1px solid #ccc;
@@ -15,7 +19,7 @@ body {
   margin: 20px;
   height: 850px;
   overflow-y: scroll;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -50,7 +54,7 @@ body {
 /*Right Column Styling */
 
 .rightColumn {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .calendar {
@@ -60,7 +64,43 @@ body {
 }
 
 .messages {
-  height: 700px;
+  height: 500px;
+}
+
+.entry-header {
+  position: relative;
+}
+
+.entry-delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.entry:hover .entry-delete {
+  opacity: 1;
+}
+
+.deleteButton {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: none; /* Remove box shadow */
+  outline: none; /* Remove outline */
+}
+
+.editButton {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: none; /* Remove box shadow */
+  outline: none; /* Remove outline */
 }
 
 /* react calendar styles */
@@ -209,4 +249,63 @@ body {
 
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
+}
+
+button {
+  appearance: none;
+  background-color: #fafbfc;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0,
+    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292e;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 6px 16px;
+  position: relative;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+button {
+  background-color: #f3f4f6;
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+button:disabled {
+  background-color: #fafbfc;
+  border-color: rgba(27, 31, 35, 0.15);
+  color: #959da5;
+  cursor: default;
+}
+
+button:active {
+  background-color: #edeff2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transition: none 0s;
+}
+
+button:focus {
+  outline: 1px transparent;
+}
+
+button:before {
+  display: none;
+}
+
+button:-webkit-details-marker {
+  display: none;
 }
