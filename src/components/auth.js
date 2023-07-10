@@ -4,6 +4,7 @@ import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { auth, googleProvider, db } from '../config/firebase';
 import { useNavigate } from 'react-router-dom';
 
+
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -93,6 +94,7 @@ const Auth = () => {
         // Not logged in state
         <div>
           <h1>Please sign up or log in to start writing entries!</h1>
+        
           <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} type="email" />
           <input placeholder="Password" onChange={(e) => setPassword(e.target.value)} type="password" />
           <button onClick={signUp}>Sign Up</button>

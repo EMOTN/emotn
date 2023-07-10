@@ -103,8 +103,8 @@ function AppRoutes({
         <Route path="/about" element={<About />} />
         <Route
           path="/home"
-          element={<Home user={user} />}
-          onClick={() => handleProtectedRouteAccess("/home")}
+          element={<Home/>}
+          // onClick={() => handleProtectedRouteAccess("/home")}
         />
         {user && (
           <Route
