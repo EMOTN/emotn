@@ -8,7 +8,9 @@ import Home from "./components/home";
 import UserProfile from "./components/UserProfile";
 import Editor from "./components/Editor/Editor";
 import Dashboard from "./components/Dashboard";
-import { auth, db } from "./config/firebase";
+import { auth} from "./config/firebase";
+import SignUpForm from "./components/SignUpForm";
+import SignInForm from "./components/SignInForm";
 
 function useQuery() {
   const { search } = useLocation();
@@ -53,95 +55,118 @@ function AppRoutes({
 
   let query = useQuery();
 
-  if (!user) {
-    return <Auth />;
-  }
+  // if (!user) {
+  //   return <Auth />;
+  // }
 
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Auth
-              user={user}
-              handleUserChange={handleUserChange}
-              setProfileCreated={setProfileCreated}
-              setProfileData={setProfileData}
-            />
-          }
+        <Route path="/" element={<About />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login"  element={<SignInForm />} />
+        <Route path="signup" element={<SignUpForm />} />
+        {/* <Route
+          path="/login"
+          element={<Auth user={user} handleUserChange={handleUserChange} />}
         />
+          <Route
+          path="/signup"
+          element={<Auth user={user} handleUserChange={handleUserChange} />}
+        /> */}
 
-        {profileCreated ? (
-          <Route path="/" element={<Dashboard user={user} />} />
+        {user ? (
+          <>
+            {profileCreated ? (
+              // <Route path="/dashboard" element={<Dashboard user={user} />} />
+              //setSelectedDate was not being read
+              <Route
+              path="/dashboard"
+              element={
+                <Dashboard
+                  user={user}
+                  profileCreated={profileCreated}
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                />
+              }
+            />
+            ) : (
+              <Route
+                path="/"
+                element={
+                  <CreateUserProfile
+                    user={user}
+                    setProfileCreated={setProfileCreated}
+                    setProfileData={setProfileData}
+                  />
+                }
+              />
+            )}
+
+            <Route
+              path="/createUserProfile"
+              element={
+                <CreateUserProfile
+                  user={user}
+                  setProfileCreated={setProfileCreated}
+                  setProfileData={setProfileData}
+                />
+              }
+            />
+            <Route
+              path="/anonymous-messages"
+              element={<AnonymousMessages user={user} />}
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <Dashboard
+                  user={user}
+                  profileCreated={profileCreated}
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                />
+              }
+              onClick={() => handleProtectedRouteAccess("/dashboard")}
+            />
+            <Route
+              path="/profile"
+              element={<UserProfile profileData={profileData} />}
+              onClick={() => handleProtectedRouteAccess("/profile")}
+            />
+            <Route
+              path="/new-journal-entry"
+              element={
+                <Editor
+                  user={user}
+                  mood={query.get("mood")}
+                  prompt={query.get("prompt")}
+                />
+              }
+            />
+          </>
         ) : (
           <Route
             path="/"
             element={
-              <CreateUserProfile
+              <Auth
                 user={user}
+                handleUserChange={handleUserChange}
                 setProfileCreated={setProfileCreated}
+                setProfileData={setProfileData}
               />
             }
           />
         )}
-
-        <Route
-          path="/createUserProfile"
-          element={
-            <CreateUserProfile
-              user={user}
-              setProfileCreated={setProfileCreated}
-              setProfileData={setProfileData}
-            />
-          }
-        />
-        <Route
-          path="/anonymous-messages"
-          element={<AnonymousMessages user={user} />}
-        />
-        <Route path="/about" element={<About />} />
-        <Route
-          path="/home"
-          element={<Home/>}
-          // onClick={() => handleProtectedRouteAccess("/home")}
-        />
-        {user && (
-          <Route
-            path="/dashboard"
-            element={
-              <Dashboard
-                user={user}
-                profileCreated={profileCreated} // Pass the profileCreated prop to the Dashboard component
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-              />
-            }
-            onClick={() => handleProtectedRouteAccess("/dashboard")}
-          />
-        )}
-        <Route
-          path="/login"
-          element={<Auth user={user} handleUserChange={handleUserChange} />}
-        />
-        <Route
-          path="/profile"
-          element={<UserProfile profileData={profileData} />}
-          onClick={() => handleProtectedRouteAccess("/profile")}
-        />
-        <Route
-          path="/new-journal-entry"
-          element={
-            <Editor
-              user={user}
-              mood={query.get("mood")}
-              prompt={query.get("prompt")}
-            />
-          } // added "mood"
-        />
       </Routes>
     </>
   );
 }
-
 export default AppRoutes;
+
+
+
+
+

@@ -7,11 +7,14 @@ export const Moods = ({ onMoodChange }) => {
   const [customEmoji, setCustomEmoji] = useState("");
 
   const handleEmojiChange = (emoji) => {
+    console.log(handleEmojiChange)
     setSelectedEmoji(emoji);
   };
 
   const handleMoodChange = (e) => {
+    console.log(setSelectedMood)
     setSelectedMood(e.target.value);
+    console.log(handleMoodChange)
   };
 
   const handleCustomMoodChange = (e) => {
@@ -21,6 +24,8 @@ export const Moods = ({ onMoodChange }) => {
   //prioritizes customMood over selectedMood in case they're both selected
   useEffect(() => {
     const mood = customMood || selectedMood;
+    console.log(onMoodChange(mood))
+    console.log(mood)
     onMoodChange(mood);
   }, [selectedMood, customMood, onMoodChange]);
 
