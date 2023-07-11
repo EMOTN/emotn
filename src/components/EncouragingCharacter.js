@@ -5,9 +5,12 @@ import './encouragingPencil.css';
 const EncouragingCharacter = ({ animationData }) => {
   const [encouragement, setEncouragement] = useState('');
   const messages = [
-    "You're doing great! Keep up the good work!",
+    "Take a breath, take that space, and take care of your mind, with EMOTN",
     "Believe in yourself. You can achieve anything!",
-    "Take a deep breath and remember how amazing you are!"
+    "Send out and receive messages of encouragement anonymously to support others and keep each other motivated on EMOTN!",
+    "Customize moods for your daily entries and get to writing.",
+    "Soundtrack your journaling session with our integrated audio library 🎵"
+
   ];
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const EncouragingCharacter = ({ animationData }) => {
     const interval = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * messages.length);
       setEncouragement(messages[randomIndex]);
-    }, 15000);
+    }, 5000);
 
     // Clean up the interval on component unmount
     return () => {
