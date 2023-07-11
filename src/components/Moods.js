@@ -47,7 +47,7 @@ export const Moods = ( {onMoodChange} ) => {
             onClick={() => handleEmojiChange('😊')}
             type="button"
           >
-            😊 
+            😊
           </button>
           <button
             className={`emoji-button ${selectedEmoji === 'sad' ? 'selected' : ''}`}

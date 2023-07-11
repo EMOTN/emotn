@@ -23,6 +23,8 @@ import Popup from "reactjs-popup";
 import "./Dashboard.css";
 import EditEntry from "./Editor/EditEntry";
 import DailyPopup from "./DailyPopup";
+import EncouragingCharacter from "./EncouragingCharacter";
+import animationData from "../animations/pencil.json";
 
 const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
   const [entries, setEntries] = useState([]);
@@ -159,9 +161,9 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
               </div>
             </div>
             <div className="leftColumn">
-              {entries.length > 0 ? (
-                <div className="entries">
-                  {entries.map((entry) => (
+              <div className="entries">
+                {entries.length > 0 ? (
+                  entries.map((entry) => (
                     <div key={entry.id} className="entry">
                       <div className="entry-header">
                         <span className="entry-date">
@@ -220,22 +222,17 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                         </Popup>
                       )}
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <p>No entries available for the selected date.</p>
-              )}
+                  ))
+                ) : (
+                  <p>No entries available for the selected date.</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
         <div className="col-md-6">
           <div className="row">
             <div className="rightColumn">
-              <img
-                src="emotn.png"
-                alt="Emotn"
-                style={{ display: "block", margin: "0 auto" }}
-              />
               <div className="calendar">
                 <Calendar value={selectedDate} onChange={handleDateChange} />
               </div>
@@ -244,6 +241,9 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                 <div className="messages">
                   <AnonymousMessages user={user} />
                 </div>
+              </div>
+              <div className="encouraging-character-container">
+                <EncouragingCharacter animationData={animationData} />
               </div>
               {/* <DailyPopup /> */}
             </div>

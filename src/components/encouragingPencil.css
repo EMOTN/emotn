@@ -1,0 +1,12 @@
+.encouraging-character {
+  width: 500px;
+  height: 500px;
+  background-color: #c1cc99;
+}
+
+/* Add the following styles to center the animation within the container */
+.encouraging-character-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
