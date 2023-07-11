@@ -5,27 +5,18 @@ import { auth, db } from "../config/firebase";
 
 const DailyPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
-    const checkFirstLoginOfDay = async () => {
-      // Check if the user is logged in
+    const checkFirstLogin = async () => {
       if (auth.currentUser) {
         const userRef = doc(db, "users", auth.currentUser.uid);
         const docSnap = await getDoc(userRef);
         const lastLoginTimestamp = docSnap.data()?.lastLoginTimestamp;
 
-        // Get the current timestamp
         const currentTimestamp = new Date().getTime();
 
-        // Check if the user has logged in today
-        if (lastLoginTimestamp !== currentTimestamp && !isInitialRender) {
-          // Delay the opening of the popup for the animation to take effect
-          setTimeout(() => {
-            setIsOpen(true);
-          }, 100);
-
-          // Update the last login timestamp in the database
+        if (!lastLoginTimestamp || lastLoginTimestamp !== currentTimestamp) {
+          setIsOpen(true);
           await setDoc(
             userRef,
             {
@@ -33,31 +24,29 @@ const DailyPopup = () => {
             },
             { merge: true }
           );
+        } else {
+          setIsOpen(false); // Frog should not appear if it's the same login session
         }
-      }
 
-      setIsInitialRender(false);
+        localStorage.removeItem("hasPopupClosed"); // Clear the "hasPopupClosed" value from localStorage
+      }
     };
 
-    // Check first login of the day when the component mounts
-    checkFirstLoginOfDay();
-
-    // Listen for changes in the authentication state
-    const unsubscribe = onAuthStateChanged(auth, checkFirstLoginOfDay);
+    const unsubscribe = onAuthStateChanged(auth, checkFirstLogin);
 
     return () => {
-      unsubscribe(); // Clean up the listener
+      unsubscribe();
     };
-  }, [isInitialRender]);
+  }, []);
 
   const closePopup = () => {
     setIsOpen(false);
+    localStorage.setItem("hasPopupClosed", "true"); // Store the popup state in localStorage
   };
 
-  if (!isOpen) {
-    return null; // Don't render anything if the popup is not open
+  if (!isOpen && !localStorage.getItem("hasPopupClosed")) {
+    return null;
   }
-
   return (
     <div
       style={{

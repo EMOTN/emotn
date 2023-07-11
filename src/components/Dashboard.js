@@ -245,7 +245,7 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                   <AnonymousMessages user={user} />
                 </div>
               </div>
-              <DailyPopup />
+              {/* <DailyPopup /> */}
             </div>
           </div>
         </div>

@@ -10,20 +10,18 @@ export const NewEntryPrompt = () => {
     const [mood, setMood] = useState('')
     const [emoji, setEmoji] = useState('')
 
-    useEffect(() => {
-        const fetchRandomPrompt = async () => {
-            const prompt = await getRandomPrompt()
-            setPrompt(prompt)
-        }
+  useEffect(() => {
+    const fetchRandomPrompt = async () => {
+      const prompt = await getRandomPrompt();
+      setPrompt(prompt);
+    };
 
-        fetchRandomPrompt()
-    }, [])
+    fetchRandomPrompt();
+  }, []);
 
-
- 
-    const handleClick = () => {
-        navigateToEditor(true)
-    }
+   const handleClick = () => {
+    navigateToEditor(true);
+  };
 
     const handleClickWithoutPrompt = () => {
         navigateToEditor(false)
@@ -70,23 +68,20 @@ export const NewEntryPrompt = () => {
 }
 
 const getRandomPrompt = async () => {
-    const q = query(collection(db, 'Prompts')) 
-    const promptsSnapshot = await getDocs(q);
-    const promptsData = promptsSnapshot.docs.map((p) => {
-        return p.data().prompt
-    })
-    const randomIndex = getRandomNumber(0, promptsData.length-1)
+  const q = query(collection(db, "Prompts"));
+  const promptsSnapshot = await getDocs(q);
+  const promptsData = promptsSnapshot.docs.map((p) => {
+    return p.data().prompt;
+  });
+  const randomIndex = getRandomNumber(0, promptsData.length - 1);
 
-    return promptsData[randomIndex]
-}
+  return promptsData[randomIndex];
+};
 
 const getRandomNumber = (a, b) => {
-    const randomDecimal = Math.random();
-    const randomNumber = randomDecimal * (b - a + 1) + a;
-    return Math.floor(randomNumber);
-}
-  
+  const randomDecimal = Math.random();
+  const randomNumber = randomDecimal * (b - a + 1) + a;
+  return Math.floor(randomNumber);
+};
+
 export default NewEntryPrompt;
-
-
-  

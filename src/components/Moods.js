@@ -97,46 +97,56 @@ export const Moods = ( {onMoodChange} ) => {
         </div>
       )}
       <div>
-      <h4>Custom Mood:</h4>
-            <input
-              type="text"
-              name="customMood"
-              placeholder="Enter Custom Mood"
-              value={customMood}
-              onChange={handleCustomMoodChange}
-            />
+        <h4>Custom Mood:</h4>
+        <input
+          type="text"
+          name="customMood"
+          placeholder="Enter Custom Mood"
+          value={customMood}
+          onChange={handleCustomMoodChange}
+        />
         <div>
           <button
-            className={`emoji-button ${customEmoji === 'happy' ? 'selected' : ''}`}
-            onClick={() => handleCustomEmojiChange('happy')}
+            className={`emoji-button ${
+              customEmoji === "happy" ? "selected" : ""
+            }`}
+            onClick={() => handleCustomEmojiChange("happy")}
             type="button"
           >
             😊
           </button>
           <button
-            className={`emoji-button ${customEmoji === 'sad' ? 'selected' : ''}`}
-            onClick={() => handleCustomEmojiChange('sad')}
+            className={`emoji-button ${
+              customEmoji === "sad" ? "selected" : ""
+            }`}
+            onClick={() => handleCustomEmojiChange("sad")}
             type="button"
           >
             😢
           </button>
           <button
-            className={`emoji-button ${customEmoji === 'angry' ? 'selected' : ''}`}
-            onClick={() => handleCustomEmojiChange('angry')}
+            className={`emoji-button ${
+              customEmoji === "angry" ? "selected" : ""
+            }`}
+            onClick={() => handleCustomEmojiChange("angry")}
             type="button"
           >
             😡
           </button>
           <button
-            className={`emoji-button ${customEmoji === 'fearful' ? 'selected' : ''}`}
-            onClick={() => handleCustomEmojiChange('fearful')}
+            className={`emoji-button ${
+              customEmoji === "fearful" ? "selected" : ""
+            }`}
+            onClick={() => handleCustomEmojiChange("fearful")}
             type="button"
           >
             😨
           </button>
           <button
-            className={`emoji-button ${customEmoji === 'surprised' ? 'selected' : ''}`}
-            onClick={() => handleCustomEmojiChange('surprised')}
+            className={`emoji-button ${
+              customEmoji === "surprised" ? "selected" : ""
+            }`}
+            onClick={() => handleCustomEmojiChange("surprised")}
             type="button"
           >
             😮
