@@ -21,19 +21,20 @@ export const Moods = ( {onMoodChange} ) => {
 //prioritizes customMood over selectedMood in case they're both selected
   useEffect(() => {
     const mood = customMood || selectedMood
-    onMoodChange(mood)
-  }, [selectedMood, customMood, onMoodChange]);
+    const emoji = customEmoji || selectedEmoji
+    onMoodChange(mood,emoji)
+  }, [selectedMood, customMood, onMoodChange, selectedEmoji, customEmoji]);
 
   const handleCustomEmojiChange = (emoji) => {
     setCustomEmoji(emoji);
   };
 
   const moodOptions = {
-    happy: ['Excited', 'Joyful', 'Content', 'Energetic'],
-    sad: ['Melancholy', 'Gloomy', 'Heartbroken', 'Lonely'],
-    angry: ['Furious', 'Annoyed', 'Frustrated', 'Resentful'],
-    fearful: ['Afraid', 'Nervous', 'Anxious', 'Terrified'],
-    surprised: ['Amazed', 'Shocked', 'Astounded', 'Speechless'],
+    '😊': ['Excited', 'Joyful', 'Content', 'Energetic'],
+    '😢': ['Melancholy', 'Gloomy', 'Heartbroken', 'Lonely'],
+    '😡': ['Furious', 'Annoyed', 'Frustrated', 'Resentful'],
+    '😨': ['Afraid', 'Nervous', 'Anxious', 'Terrified'],
+    '😮': ['Amazed', 'Shocked', 'Astounded', 'Speechless'],
   };
 
   return (
@@ -43,35 +44,35 @@ export const Moods = ( {onMoodChange} ) => {
         <div>
           <button
             className={`emoji-button ${selectedEmoji === 'happy' ? 'selected' : ''}`}
-            onClick={() => handleEmojiChange('happy')}
+            onClick={() => handleEmojiChange('😊')}
             type="button"
           >
-            😊
+            😊 
           </button>
           <button
             className={`emoji-button ${selectedEmoji === 'sad' ? 'selected' : ''}`}
-            onClick={() => handleEmojiChange('sad')}
+            onClick={() => handleEmojiChange('😢')}
             type="button"
           >
             😢
           </button>
           <button
             className={`emoji-button ${selectedEmoji === 'angry' ? 'selected' : ''}`}
-            onClick={() => handleEmojiChange('angry')}
+            onClick={() => handleEmojiChange('😡')}
             type="button"
           >
             😡
           </button>
           <button
             className={`emoji-button ${selectedEmoji === 'fearful' ? 'selected' : ''}`}
-            onClick={() => handleEmojiChange('fearful')}
+            onClick={() => handleEmojiChange('😨')}
             type="button"
           >
             😨
           </button>
           <button
             className={`emoji-button ${selectedEmoji === 'surprised' ? 'selected' : ''}`}
-            onClick={() => handleEmojiChange('surprised')}
+            onClick={() => handleEmojiChange('😮')}
             type="button"
           >
             😮

@@ -8,6 +8,7 @@ export const NewEntryPrompt = () => {
     const navigate = useNavigate();
     const [prompt, setPrompt] = useState('')
     const [mood, setMood] = useState('')
+    const [emoji, setEmoji] = useState('')
 
     useEffect(() => {
         const fetchRandomPrompt = async () => {
@@ -38,6 +39,9 @@ export const NewEntryPrompt = () => {
         if (mood && mood.length > 0) {
             searchParams.append('mood', mood)
         }
+        if (emoji && emoji.length > 0) {
+            searchParams.append('emoji', emoji)
+        }
 
         if (shouldIncludePrompt && prompt) {
             searchParams.append('prompt', prompt)
@@ -46,12 +50,12 @@ export const NewEntryPrompt = () => {
         if (searchParams.size > 0) {
             url += "?" + searchParams.toString()
         }
-
         navigate(url)
     }
 
-    const moodChangeHandler = (newMood) => {
+     const moodChangeHandler = (newMood, newEmoji) => {
         setMood(newMood)
+        setEmoji(newEmoji)
     }
 
     return (

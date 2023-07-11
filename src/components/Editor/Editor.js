@@ -16,7 +16,7 @@ import "react-quill/dist/quill.snow.css";
 import "./editor.css";
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
 
-const Editor = ({ user, mood, prompt }) => {
+const Editor = ({ user, mood, prompt, emoji }) => {
   const [entryText, setEntryText] = useState('');
   const [isEmpty, setIsEmpty] = useState(true)
 
@@ -25,6 +25,7 @@ const Editor = ({ user, mood, prompt }) => {
   const handleSave = async () => {
     try {
       const entryData = {
+        emoji: emoji,
         mood: mood,
         body: entryText,
         prompt: prompt,
@@ -80,6 +81,7 @@ const Editor = ({ user, mood, prompt }) => {
 
   return (
     <div>
+      <div>{mood} {emoji}</div>
       <div className="prompt">{renderPrompt()}</div>
         <EditorToolbar />
         <ReactQuill
