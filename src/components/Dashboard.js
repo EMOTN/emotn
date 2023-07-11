@@ -24,7 +24,7 @@ import "./Dashboard.css";
 import EditEntry from "./Editor/EditEntry";
 import DailyPopup from "./DailyPopup";
 import EncouragingCharacter from "./EncouragingCharacter";
-import animationData from "../animations/pencil.json";
+import animationData from "../animations/pencil2.json";
 
 const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
   const [entries, setEntries] = useState([]);
