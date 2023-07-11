@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
+import "./UserProfile.css";
+
 
 const UserProfile = () => {
   const [profileData, setProfileData] = useState(null);
@@ -61,11 +63,11 @@ const UserProfile = () => {
   }
 
   return (
-    <div>
-      <h2>User Profile</h2>
-      <form onSubmit={handleUpdateProfile}>
+    <div className="user-profile-container">
+    <h2>User Profile</h2>
+      <form className="user-profile-form" onSubmit={handleUpdateProfile}>
         <label>
-          First Name:
+   First Name:
           <input
             type="text"
             name="firstName"
@@ -73,6 +75,7 @@ const UserProfile = () => {
             onChange={handleChange}
           />
         </label>
+
         <label>
           Last Name:
           <input
@@ -107,3 +110,5 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+

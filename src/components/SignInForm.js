@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,24 +15,31 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
-  signOut,
+
 } from "firebase/auth";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, googleProvider, db } from "../config/firebase";
 
-import SignUpForm from "./SignUpForm";
+
 
 const SignInForm = () => {
   const navigate = useNavigate(); // Initialize the navigate variable
+    // Define the email and setEmail state variables using useState
+    // const [email, setEmail] = useState("");
+    // // Define the password and setPassword state variables using useState
+    // const [password, setPassword] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
+
+
+
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -75,10 +83,16 @@ const SignInForm = () => {
       console.error(error);
     }
   };
+  //Added lines 81-84
+  const handleSignUpLinkClick = () => {
+    console.log("hello signup")
+    navigate("/signup")
+
+  };
 
   return (
     <ThemeProvider theme={createTheme()}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <Box
           sx={{
@@ -86,9 +100,12 @@ const SignInForm = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            bgcolor: "rgba(245, 166, 91, 0.6)", // Set the background color here
+            padding: "20px",
+            minHeight: "100vh"
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#6CAE75" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -101,14 +118,24 @@ const SignInForm = () => {
             sx={{ mt: 1 }}
           >
             <TextField
+
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="email-signin"
               label="Email Address"
               name="email"
               autoComplete="email"
               autoFocus
+              // value={email} // Add the value prop
+              // onChange={(e) => setEmail(e.target.value)} // Add the onChange prop to update the email state
+              InputProps={{
+                sx: {
+                  '& fieldset': {
+                    backgroundColor: '#f1ece4',
+                  },
+                }
+              }}
             />
             <TextField
               margin="normal"
@@ -117,25 +144,52 @@ const SignInForm = () => {
               name="password"
               label="Password"
               type="password"
-              id="password"
+              id="password-signin"
               autoComplete="current-password"
+              // value={password} // Add the value prop
+              // onChange={(e) => setPassword(e.target.value)} // Add the onChange prop to update the password state
+              InputProps={{
+                sx: {
+                  '& fieldset': {
+                    backgroundColor: '#f1ece4',
+                  },
+                }
+              }}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+              <Checkbox
+              value="remember"
+              color="primary"
+              sx={{
+                color: "#f1ece4",
+                "&:hover": {
+                  color: "#5C964F", // Change the checkbox color on hover
+                },
+                "&.Mui-checked": {
+                  color: "#5C964F", // Change the checkbox color when checked
+                },
+              }}
+              />
+              }
               label="Remember me"
-            />
+              />
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, bgcolor: "#6CAE75",  "&:hover": {
+                bgcolor: "#5C964F", // Change the hover background color here
+              },}}
             >
               Sign In
             </Button>
             <Button
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, bgcolor: "#6CAE75",  "&:hover": {
+                bgcolor: "#5C964F", // Change the hover background color here
+              },}}
               onClick={handleSignInWithGoogle}
             >
               Sign In with Google
@@ -148,7 +202,10 @@ const SignInForm = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link variant="body2"
+                // to={"/signup"}
+                onClick={handleSignUpLinkClick}
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

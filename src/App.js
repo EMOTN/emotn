@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { auth, db } from "./config/firebase";
-import { useNavigate, Routes, Route, useLocation } from "react-router-dom";
-import Auth from "./components/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import ResponsiveAppBar from "./components/Navbar";
 import AppRoutes from "./AppRoutes";
+import { doc, getDoc } from "firebase/firestore";
+import './App.css'
+
 
 function App() {
   const [user, setUser] = useState(null); // Track user authentication status
-  const [profileData, setProfileData] = React.useState(null);
+  const [profileData, setProfileData] = useState(null);
   const [profileCreated, setProfileCreated] = useState(false); // Track user profile creation status
-
   const navigate = useNavigate();
 
-  useEffect(() => {
+    useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setUser(user);
 
@@ -46,29 +46,24 @@ function App() {
     }
   };
 
-  if (!user) {
-    return (
-      <div className="App">
-        <ResponsiveAppBar handleProfileClick={handleProfileClick} user={user} />
-        <Auth user={user} handleUserChange={setUser} />
-      </div>
-    );
-  }
 
   return (
     <div className="App">
       <ResponsiveAppBar handleProfileClick={handleProfileClick} user={user} />
-
       <AppRoutes
         user={user}
         profileCreated={profileCreated}
         setProfileCreated={setProfileCreated}
-        handleProfileClick={handleProfileClick} // Pass the handleProfileClick function
+        handleProfileClick={handleProfileClick}
         profileData={profileData}
-        setProfileData={setProfileData} // Pass the setProfileData function to update the profileData state
+        setProfileData={setProfileData}
       />
     </div>
   );
 }
 
 export default App;
+
+
+
+
