@@ -25,6 +25,11 @@ const MusicPlayer = () => {
     const handleSubgenreClick = async (subgenre) => {
         setSubgenre(subgenre);
 
+        const subgenreSection = document.getElementById('subgenreSection');
+            if (subgenreSection) {
+            subgenreSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
         const storage = getStorage();
         const musicFileRef = ref(storage, `gs://fir-7334a.appspot.com/Journaling Music/${subgenre}.mp3`);
         const downloadURL = await getDownloadURL(musicFileRef);
@@ -39,8 +44,9 @@ const MusicPlayer = () => {
 
     if(option) {
         return (
-            <div>
-                <h2>What would you like to listen to?</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                 <h2>What would you like to listen to?</h2>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '10px' }}>
                 <button onClick={() => handleGenreClick('classical')}
                 style={{ backgroundColor: genre === 'classical' ? '#556b2f' : '' }}> Classical </button>
                 <button onClick={() => handleGenreClick('nature')}
@@ -52,7 +58,7 @@ const MusicPlayer = () => {
                 <button onClick={() => handleGenreClick('background noise')}
                 style={{ backgroundColor: genre === 'background noise' ? '#556b2f' : '' }}> Background Noise </button>
                 {genre && (
-                    <div>
+                    <div id="subgenreSection" style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '10px' }}>
                         {genre === 'classical' && (
                             <div>
                             <button onClick={() => handleSubgenreClick('baroque')}>Baroque</button>
@@ -111,6 +117,7 @@ const MusicPlayer = () => {
                         />
                     </div>
                 )}
+            </div>
             </div>
         )
     }
