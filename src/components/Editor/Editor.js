@@ -15,6 +15,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./editor.css";
 import EditorToolbar, { modules, formats } from "./EditorToolbar";
+import MusicPlayer from "../MusicPlayer";
 
 const Editor = ({ user, mood, prompt, emoji }) => {
   const [entryText, setEntryText] = useState('');
@@ -96,6 +97,9 @@ const Editor = ({ user, mood, prompt, emoji }) => {
             Back to Dashboard
           </button>
         </div>
+        <div className="musicPlayer">
+        <MusicPlayer />
+      </div>
     </div>
   );
 };
