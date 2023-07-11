@@ -105,53 +105,6 @@ export const Moods = ( {onMoodChange} ) => {
           value={customMood}
           onChange={handleCustomMoodChange}
         />
-        <div>
-          <button
-            className={`emoji-button ${
-              customEmoji === "happy" ? "selected" : ""
-            }`}
-            onClick={() => handleCustomEmojiChange("happy")}
-            type="button"
-          >
-            😊
-          </button>
-          <button
-            className={`emoji-button ${
-              customEmoji === "sad" ? "selected" : ""
-            }`}
-            onClick={() => handleCustomEmojiChange("sad")}
-            type="button"
-          >
-            😢
-          </button>
-          <button
-            className={`emoji-button ${
-              customEmoji === "angry" ? "selected" : ""
-            }`}
-            onClick={() => handleCustomEmojiChange("angry")}
-            type="button"
-          >
-            😡
-          </button>
-          <button
-            className={`emoji-button ${
-              customEmoji === "fearful" ? "selected" : ""
-            }`}
-            onClick={() => handleCustomEmojiChange("fearful")}
-            type="button"
-          >
-            😨
-          </button>
-          <button
-            className={`emoji-button ${
-              customEmoji === "surprised" ? "selected" : ""
-            }`}
-            onClick={() => handleCustomEmojiChange("surprised")}
-            type="button"
-          >
-            😮
-          </button>
-        </div>
       </div>
     </div>
   );
