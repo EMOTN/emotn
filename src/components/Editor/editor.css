@@ -1930,3 +1930,9 @@
 .buttonTime button {
   margin: 0 15px;
 }
+
+.musicPlayer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}

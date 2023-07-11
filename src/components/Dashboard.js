@@ -186,7 +186,7 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                         </span>
                       </div>
                       <span style={{ display: "block" }}>
-                        <b>Mood:</b> {entry.mood}
+                        <b>Mood:</b> {entry.mood} {entry.emoji}
                       </span>
                       <span style={{ display: "block" }}>
                         <b>Prompt:</b> {entry.prompt}

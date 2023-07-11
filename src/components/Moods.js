@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-export const Moods = ({ onMoodChange }) => {
-  const [selectedEmoji, setSelectedEmoji] = useState("");
-  const [selectedMood, setSelectedMood] = useState("");
-  const [customMood, setCustomMood] = useState("");
-  const [customEmoji, setCustomEmoji] = useState("");
+export const Moods = ( {onMoodChange} ) => {
+  const [selectedEmoji, setSelectedEmoji] = useState('');
+  const [selectedMood, setSelectedMood] = useState('');
+  const [customMood, setCustomMood] = useState('');
+  const [customEmoji, setCustomEmoji] = useState('');
 
   const handleEmojiChange = (emoji) => {
     console.log(handleEmojiChange)
@@ -12,33 +12,30 @@ export const Moods = ({ onMoodChange }) => {
   };
 
   const handleMoodChange = (e) => {
-    console.log(setSelectedMood)
-    setSelectedMood(e.target.value);
-    console.log(handleMoodChange)
-  };
+    setSelectedMood(e.target.value)
+  }
 
   const handleCustomMoodChange = (e) => {
     setCustomMood(e.target.value);
   };
 
-  //prioritizes customMood over selectedMood in case they're both selected
+//prioritizes customMood over selectedMood in case they're both selected
   useEffect(() => {
-    const mood = customMood || selectedMood;
-    console.log(onMoodChange(mood))
-    console.log(mood)
-    onMoodChange(mood);
-  }, [selectedMood, customMood, onMoodChange]);
+    const mood = customMood || selectedMood
+    const emoji = customEmoji || selectedEmoji
+    onMoodChange(mood,emoji)
+  }, [selectedMood, customMood, onMoodChange, selectedEmoji, customEmoji]);
 
   const handleCustomEmojiChange = (emoji) => {
     setCustomEmoji(emoji);
   };
 
   const moodOptions = {
-    happy: ["Excited", "Joyful", "Content", "Energetic"],
-    sad: ["Melancholy", "Gloomy", "Heartbroken", "Lonely"],
-    angry: ["Furious", "Annoyed", "Frustrated", "Resentful"],
-    fearful: ["Afraid", "Nervous", "Anxious", "Terrified"],
-    surprised: ["Amazed", "Shocked", "Astounded", "Speechless"],
+    '😊': ['Excited', 'Joyful', 'Content', 'Energetic'],
+    '😢': ['Melancholy', 'Gloomy', 'Heartbroken', 'Lonely'],
+    '😡': ['Furious', 'Annoyed', 'Frustrated', 'Resentful'],
+    '😨': ['Afraid', 'Nervous', 'Anxious', 'Terrified'],
+    '😮': ['Amazed', 'Shocked', 'Astounded', 'Speechless'],
   };
 
   return (
@@ -47,46 +44,36 @@ export const Moods = ({ onMoodChange }) => {
         <h4>Select an Emoji:</h4>
         <div>
           <button
-            className={`emoji-button ${
-              selectedEmoji === "happy" ? "selected" : ""
-            }`}
-            onClick={() => handleEmojiChange("happy")}
+            className={`emoji-button ${selectedEmoji === 'happy' ? 'selected' : ''}`}
+            onClick={() => handleEmojiChange('😊')}
             type="button"
           >
-            😊
+            😊 
           </button>
           <button
-            className={`emoji-button ${
-              selectedEmoji === "sad" ? "selected" : ""
-            }`}
-            onClick={() => handleEmojiChange("sad")}
+            className={`emoji-button ${selectedEmoji === 'sad' ? 'selected' : ''}`}
+            onClick={() => handleEmojiChange('😢')}
             type="button"
           >
             😢
           </button>
           <button
-            className={`emoji-button ${
-              selectedEmoji === "angry" ? "selected" : ""
-            }`}
-            onClick={() => handleEmojiChange("angry")}
+            className={`emoji-button ${selectedEmoji === 'angry' ? 'selected' : ''}`}
+            onClick={() => handleEmojiChange('😡')}
             type="button"
           >
             😡
           </button>
           <button
-            className={`emoji-button ${
-              selectedEmoji === "fearful" ? "selected" : ""
-            }`}
-            onClick={() => handleEmojiChange("fearful")}
+            className={`emoji-button ${selectedEmoji === 'fearful' ? 'selected' : ''}`}
+            onClick={() => handleEmojiChange('😨')}
             type="button"
           >
             😨
           </button>
           <button
-            className={`emoji-button ${
-              selectedEmoji === "surprised" ? "selected" : ""
-            }`}
-            onClick={() => handleEmojiChange("surprised")}
+            className={`emoji-button ${selectedEmoji === 'surprised' ? 'selected' : ''}`}
+            onClick={() => handleEmojiChange('😮')}
             type="button"
           >
             😮
@@ -96,7 +83,11 @@ export const Moods = ({ onMoodChange }) => {
       {selectedEmoji && (
         <div>
           <h4>Select a Mood:</h4>
-          <select name="mood" value={selectedMood} onChange={handleMoodChange}>
+          <select
+            name="mood"
+            value={selectedMood}
+            onChange={handleMoodChange}
+          >
             <option value="">Select Mood</option>
             {moodOptions[selectedEmoji].map((mood) => (
               <option key={mood} value={mood}>

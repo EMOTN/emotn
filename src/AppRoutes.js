@@ -55,10 +55,6 @@ function AppRoutes({
 
   let query = useQuery();
 
-  // if (!user) {
-  //   return <Auth />;
-  // }
-
   return (
     <>
       <Routes>
@@ -67,20 +63,10 @@ function AppRoutes({
         <Route path="/home" element={<Home />} />
         <Route path="/login"  element={<SignInForm />} />
         <Route path="signup" element={<SignUpForm />} />
-        {/* <Route
-          path="/login"
-          element={<Auth user={user} handleUserChange={handleUserChange} />}
-        />
-          <Route
-          path="/signup"
-          element={<Auth user={user} handleUserChange={handleUserChange} />}
-        /> */}
 
         {user ? (
           <>
             {profileCreated ? (
-              // <Route path="/dashboard" element={<Dashboard user={user} />} />
-              //setSelectedDate was not being read
               <Route
               path="/dashboard"
               element={
@@ -142,6 +128,7 @@ function AppRoutes({
                 <Editor
                   user={user}
                   mood={query.get("mood")}
+                  emoji={query.get("emoji")}
                   prompt={query.get("prompt")}
                 />
               }
