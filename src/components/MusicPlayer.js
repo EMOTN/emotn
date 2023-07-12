@@ -17,18 +17,17 @@ const MusicPlayer = () => {
     };
 
     const handleGenreClick = (genre) => {
+        const genreList = document.getElementById('genreList');
+            if (genreList) {
+            genreList.scrollIntoView({ behavior: 'smooth' });
+        };
         setGenre(genre);
         setSubgenre('');
         setAudioFile('');
-    };
+    }
     
     const handleSubgenreClick = async (subgenre) => {
         setSubgenre(subgenre);
-
-        const subgenreSection = document.getElementById('subgenreSection');
-            if (subgenreSection) {
-            subgenreSection.scrollIntoView({ behavior: 'smooth' });
-    }
 
         const storage = getStorage();
         const musicFileRef = ref(storage, `gs://fir-7334a.appspot.com/Journaling Music/${subgenre}.mp3`);
@@ -40,25 +39,28 @@ const MusicPlayer = () => {
           audioRef.current.load();
           audioRef.current.play();
         }
+        const musicPlayer = document.getElementById('musicPlayer');
+            if (musicPlayer) {
+            musicPlayer.scrollIntoView({ behavior: 'smooth' });
+}
   };
 
     if(option) {
         return (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-                 <h2>What would you like to listen to?</h2>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '10px' }}>
+            <div style={{ textAlign: 'center' }}>
+                <h2>What would you like to listen to?</h2>
                 <button onClick={() => handleGenreClick('classical')}
-                style={{ backgroundColor: genre === 'classical' ? '#556b2f' : '' }}> Classical </button>
+                style={{ backgroundColor: genre === 'classical' ? '#F5A65B' : '' }}> Classical </button>
                 <button onClick={() => handleGenreClick('nature')}
-                style={{ backgroundColor: genre === 'nature' ? '#556b2f' : '' }}> Nature </button>
+                style={{ backgroundColor: genre === 'nature' ? '#F5A65B' : '' }}> Nature </button>
                 <button onClick={() => handleGenreClick('instrumental')}
-                style={{ backgroundColor: genre === 'instrumental' ? '#556b2f' : '' }}> Instrumental </button>
+                style={{ backgroundColor: genre === 'instrumental' ? '#F5A65B' : '' }}> Instrumental </button>
                 <button onClick={() => handleGenreClick('ambient/ethereal')}
-                style={{ backgroundColor: genre === 'ambient/ethereal' ? '#556b2f' : '' }}> Ambient/Ethereal </button>
+                style={{ backgroundColor: genre === 'ambient/ethereal' ? '#F5A65B' : '' }}> Ambient/Ethereal </button>
                 <button onClick={() => handleGenreClick('background noise')}
-                style={{ backgroundColor: genre === 'background noise' ? '#556b2f' : '' }}> Background Noise </button>
+                style={{ backgroundColor: genre === 'background noise' ? '#F5A65B' : '' }}> Background Noise </button>
                 {genre && (
-                    <div id="subgenreSection" style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '10px' }}>
+                    <div id='genreList' style={{ margin: '20px' }} >
                         {genre === 'classical' && (
                             <div>
                             <button onClick={() => handleSubgenreClick('baroque')}>Baroque</button>
@@ -108,16 +110,14 @@ const MusicPlayer = () => {
                     </div>
                 )}
                 {subgenre && (
-                    <div>
+                    <div id='musicPlayer' style={{ marginBottom: '20px' }}>
                        <AudioPlayer
                             autoPlay
-                            loop
-                            volume 
+                            loop 
                             src={audioFile}
                         />
                     </div>
                 )}
-            </div>
             </div>
         )
     }
