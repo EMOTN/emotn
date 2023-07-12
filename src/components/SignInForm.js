@@ -21,15 +21,14 @@ import {
 } from "firebase/auth";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, googleProvider, db } from "../config/firebase";
+import Input from '@mui/material/Input';
+import './SignInForm.css'
 
 
 
 const SignInForm = () => {
+
   const navigate = useNavigate(); // Initialize the navigate variable
-    // Define the email and setEmail state variables using useState
-    // const [email, setEmail] = useState("");
-    // // Define the password and setPassword state variables using useState
-    // const [password, setPassword] = useState("");
 
 
   const handleSubmit = async (e) => {
@@ -91,9 +90,9 @@ const SignInForm = () => {
   };
 
   return (
-    <ThemeProvider theme={createTheme()}>
+
       <Container component="main" maxWidth="xs" >
-        <CssBaseline />
+
         <Box
           sx={{
             marginTop: 8,
@@ -102,7 +101,6 @@ const SignInForm = () => {
             alignItems: "center",
             bgcolor: "rgba(245, 166, 91, 0.6)", // Set the background color here
             padding: "20px",
-            minHeight: "100vh"
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "#6CAE75" }}>
@@ -117,6 +115,7 @@ const SignInForm = () => {
             noValidate
             sx={{ mt: 1 }}
           >
+
             <TextField
 
               margin="normal"
@@ -127,16 +126,15 @@ const SignInForm = () => {
               name="email"
               autoComplete="email"
               autoFocus
-              // value={email} // Add the value prop
-              // onChange={(e) => setEmail(e.target.value)} // Add the onChange prop to update the email state
-              InputProps={{
-                sx: {
-                  '& fieldset': {
-                    backgroundColor: '#f1ece4',
-                  },
-                }
-              }}
-            />
+              // InputProps={{
+              //   sx: {
+              //     '& fieldset': {
+              //       backgroundColor: '#f1ece4',
+              //     },
+              //   }
+              // }}
+
+               />
             <TextField
               margin="normal"
               required
@@ -146,15 +144,13 @@ const SignInForm = () => {
               type="password"
               id="password-signin"
               autoComplete="current-password"
-              // value={password} // Add the value prop
-              // onChange={(e) => setPassword(e.target.value)} // Add the onChange prop to update the password state
-              InputProps={{
-                sx: {
-                  '& fieldset': {
-                    backgroundColor: '#f1ece4',
-                  },
-                }
-              }}
+              // InputProps={{
+              //   sx: {
+              //     '& fieldset': {
+              //       backgroundColor: '#f1ece4',
+              //     },
+              //   }
+              // }}
             />
             <FormControlLabel
               control={
@@ -213,7 +209,7 @@ const SignInForm = () => {
           </Box>
         </Box>
       </Container>
-    </ThemeProvider>
+
   );
 };
 
