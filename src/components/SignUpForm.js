@@ -68,9 +68,9 @@ const SignUpForm = () => {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+
         <Box
           sx={{
             marginTop: 8,
@@ -79,7 +79,7 @@ const SignUpForm = () => {
             alignItems: "center",
             bgcolor: "rgba(245, 166, 91, 0.6)", // Set the background color here
             padding: "20px",
-            minHeight: "100vh"
+
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "#6CAE75" }}>
@@ -104,7 +104,7 @@ const SignUpForm = () => {
                   id="firstName"
                   label="First Name"
                   autoFocus
-                  sx={{ bgcolor: '#f1ece4'}}
+                  sx={{ bgcolor: '#E8F0FE'}}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
@@ -117,7 +117,7 @@ const SignUpForm = () => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                  sx={{ bgcolor: '#f1ece4'}}
+                  sx={{ bgcolor: '#E8F0FE'}}
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
@@ -130,7 +130,7 @@ const SignUpForm = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  sx={{ bgcolor: '#f1ece4'}}
+                  sx={{ bgcolor: '#E8F0FE'}}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -144,14 +144,14 @@ const SignUpForm = () => {
                   type="password"
                   id="password-signup"
                   autoComplete="new-password"
-                  sx={{ bgcolor: '#f1ece4'}}
+                  sx={{ bgcolor: '#E8F0FE'}}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} >
                 <FormControlLabel
-                
+
                   control={
                     <Checkbox
                     value="allowExtraEmails"
@@ -194,8 +194,6 @@ const SignUpForm = () => {
           </Box>
         </Box>
       </Container>
-
-    </ThemeProvider>
   );
 };
 

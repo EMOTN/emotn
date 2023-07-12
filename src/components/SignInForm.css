@@ -1,0 +1,17 @@
+/* /* .css-12lf7l0-MuiFormControl-root-MuiTextField-root {
+  background: red;
+} */
+/* .MuiInputBase-input  {
+  background: red;
+}
+
+.MuiTextField-root  {
+  background: red;
+}
+
+.MuiInputBase-input {
+  background-color: #f1ece4; /* Replace with your desired background color
+
+
+Ensure the input shows the user's text as they type .MuiInputBase-input:focus {
+  background-color: transparent; /* Use transparent background when the input is focused } */

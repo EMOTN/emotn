@@ -1,31 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
-import StyledEngineProvider from "@mui/material/StyledEngineProvider";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { auth, db } from "./config/firebase";
 import { useNavigate } from "react-router-dom";
 import ResponsiveAppBar from "./components/Navbar";
 import AppRoutes from "./AppRoutes";
 import { doc, getDoc } from "firebase/firestore";
 import './App.css'
-import Home from "./components/home";
-import SignInForm from "./components/SignInForm";
 
-const theme = createTheme();
-theme.typography.h2 = {
-  fontSize: "100px",
-  "@media (max-width: 1199px)": {
-    fontSize: "42px"
-  }
-};
-// theme.components.MuiFormControl = {
-//   fontSize: '100px',
-//   color: 'red'
-// }
 
 function App() {
   const [user, setUser] = useState(null); // Track user authentication status
@@ -66,31 +46,23 @@ function App() {
     }
   };
 
-  return (
 
-    <StyledEngineProvider injectFirst>
-    <ThemeProvider theme={theme}>
-      <React.StrictMode>
+  return (
+    <div className="App">
       <ResponsiveAppBar handleProfileClick={handleProfileClick} user={user} />
- <AppRoutes
-     user={user}
-       profileCreated={profileCreated}
+      <AppRoutes
+        user={user}
+        profileCreated={profileCreated}
         setProfileCreated={setProfileCreated}
         handleProfileClick={handleProfileClick}
         profileData={profileData}
         setProfileData={setProfileData}
-       />
-
-      </React.StrictMode>
-    </ThemeProvider>
-  </StyledEngineProvider>
-
-);
+      />
+    </div>
+  );
 }
 
 export default App;
-
-
 
 
 
