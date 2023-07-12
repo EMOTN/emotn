@@ -1,14 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { db } from '../config/firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
 import {useNavigate} from 'react-router-dom';
 import { Moods } from './Moods'
+import lottie from 'lottie-web';
+import animationData from '../animations/strongPencil.json';
+import './prompt.css';
 
 export const NewEntryPrompt = () => {
     const navigate = useNavigate();
     const [prompt, setPrompt] = useState('')
     const [mood, setMood] = useState('')
     const [emoji, setEmoji] = useState('')
+    const animationContainerRef = useRef(null);
 
   useEffect(() => {
     const fetchRandomPrompt = async () => {
@@ -17,6 +21,20 @@ export const NewEntryPrompt = () => {
     };
 
     fetchRandomPrompt();
+  }, []);
+
+  useEffect(() => {
+    const anim = lottie.loadAnimation({
+      container: animationContainerRef.current,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: animationData,
+    });
+
+    return () => {
+      anim.destroy();
+    };
   }, []);
 
    const handleClick = () => {
@@ -57,15 +75,18 @@ export const NewEntryPrompt = () => {
     }
 
     return (
-        <div>
-            <Moods onMoodChange={moodChangeHandler}/>
-            <h3>{prompt}</h3>
-            <button onClick={handleClick}>Answer</button>
-            <p>or</p>
-            <button onClick={handleClickWithoutPrompt}>I prefer to start with a blank page</button>
+      <div className="new-entry-prompt-container">
+        <div className="animation-container prompt-animation" ref={animationContainerRef}></div>
+        <div className="prompt-content">
+          <Moods onMoodChange={moodChangeHandler} />
+          <h3>{prompt}</h3>
+          <button onClick={handleClick}>Answer</button>
+          <p>or</p>
+          <button onClick={handleClickWithoutPrompt}>I prefer to start with a blank page</button>
         </div>
-    )
-}
+      </div>
+    );
+  };
 
 const getRandomPrompt = async () => {
   const q = query(collection(db, "Prompts"));
