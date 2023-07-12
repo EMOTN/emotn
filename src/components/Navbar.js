@@ -13,16 +13,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link, useLocation } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
-
-// const pages = [
-//   {title:'About Us', path:'/about'},
-//   {title:'Home', path:'/home'},
-//   {title: isLoggedIn ? 'Dashboard' : 'Log In/Sign Up', path: isLoggedIn ? '/dashboard' : '/login' },
-// ];
 
 // Function to get the initials from a name
 const getInitials = (name) => {
@@ -41,7 +35,7 @@ function ResponsiveAppBar() {
   const navigate = useNavigate();
 
   //Added the code below
-  const location = useLocation();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -54,16 +48,20 @@ function ResponsiveAppBar() {
     };
   }, []);
 
-  const pages = [
-    { title: "About Us", path: "/about" },
-    { title: "Home", path: "/home" },
-    {
-      title: isLoggedIn ? "Dashboard" : "Log In/Sign Up",
-      path: isLoggedIn ? "/Dashboard" : "/login",
-    },
-  ];
 
-  //Added the code above^^
+  const pages = isLoggedIn
+  ? [
+      { title: "About Us", path: "/about" },
+      { title: "Home", path: "/home" },
+      { title: "Dashboard", path: "/Dashboard" },
+    ]
+  : [
+      { title: "About Us", path: "/about" },
+      { title: "Home", path: "/home" },
+      { title: "Log In", path: "/login" },
+      { title: "Sign Up", path: "/signup" },
+    ];
+
 
   const handleLogout = () => {
     auth
@@ -115,10 +113,17 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const settings = [
-    { title: "Profile", action: handleProfileLinkClick },
-    { title: "Logout", action: handleLogout },
-  ];
+
+  const settings = isLoggedIn
+  ? [
+      { title: "Profile", action: handleProfileLinkClick },
+      { title: "Logout", action: handleLogout },
+    ]
+  : [
+      { title: "Log In", action: () => navigate("/login") },
+      { title: "Sign Up", action: () => navigate("/signup") },
+    ];
+
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#6CAE75" }}>
@@ -204,24 +209,7 @@ function ResponsiveAppBar() {
           >
             EMOTN
           </Typography>
-          {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Link
-                key={page.title}
-                to={page.path}
-                onClick={handleCloseNavMenu}
-                style={{ textDecoration: 'none' }}
-                >
-                <Button
-                key={page.title}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-               {page.title}
-              </Button>
-              </Link>
-            ))}
-          </Box> */}
-          {/* Added this box instead of the one above */}
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Link
@@ -239,43 +227,6 @@ function ResponsiveAppBar() {
               </Link>
             ))}
           </Box>
-
-          {/* Added the code below */}
-          {/* {isLoggedIn ? (
-            <Link to="/dashboard" style={{ textDecoration: 'none' }}>
-              <Button
-                sx={{
-                  my: 2,
-                  color: 'white',
-                  display: 'block',
-                  backgroundColor: location.pathname === '/dashboard' ? '#6CAE75' : 'transparent',
-                  '&:hover': {
-                    backgroundColor: '#6CAE75',
-                  },
-                }}
-              >
-                Dashboard
-              </Button>
-            </Link>
-          ) : (
-            <Link to="/login" style={{ textDecoration: 'none' }}>
-              <Button
-                sx={{
-                  my: 2,
-                  color: 'white',
-                  display: 'block',
-                  backgroundColor: location.pathname === '/dashboard' ? '#6CAE75' : 'transparent',
-                  '&:hover': {
-                    backgroundColor: '#6CAE75',
-                  },
-                }}
-              >
-                Log In/Sign Up
-              </Button>
-            </Link>
-          )} */}
-          {/* Added the code above^^^ */}
-          {/* Add the profile data rendering here */}
           {profileData && (
             <Typography variant="body1" sx={{ mr: 2 }}>
               Welcome, {profileData.firstName} {profileData.lastName}
@@ -284,9 +235,7 @@ function ResponsiveAppBar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt={getInitials(profileData?.firstName + ' ' + profileData?.lastName)} src="/static/images/avatar/2.jpg" />
-                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {profileData ? ( // Check if profileData is available
                   <Avatar
@@ -335,3 +284,8 @@ function ResponsiveAppBar() {
   );
 }
 export default ResponsiveAppBar;
+
+
+
+
+

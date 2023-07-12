@@ -23,6 +23,8 @@ import Popup from "reactjs-popup";
 import "./Dashboard.css";
 import EditEntry from "./Editor/EditEntry";
 import DailyPopup from "./DailyPopup";
+import EncouragingCharacter from "./EncouragingCharacter";
+import animationData from "../animations/pencil2.json";
 
 const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
   const [entries, setEntries] = useState([]);
@@ -167,6 +169,8 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                         <span className="entry-date">
                           <b>Date:</b>{" "}
                           {toDate(entry.date.toDate()).toLocaleDateString()}
+                          {/* {new Date(entry.date.seconds * 1000).toLocaleDateString()} */}
+
                         </span>
                         <span className="entry-delete">
                           <button
@@ -244,6 +248,9 @@ const Dashboard = ({ user, selectedDate, setSelectedDate }) => {
                 <div className="messages">
                   <AnonymousMessages user={user} />
                 </div>
+              </div>
+              <div className="encouraging-character-container">
+                <EncouragingCharacter animationData={animationData} />
               </div>
               {/* <DailyPopup /> */}
             </div>

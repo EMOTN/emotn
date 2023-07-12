@@ -7,6 +7,7 @@ export const Moods = ( {onMoodChange} ) => {
   const [customEmoji, setCustomEmoji] = useState('');
 
   const handleEmojiChange = (emoji) => {
+    console.log(handleEmojiChange)
     setSelectedEmoji(emoji);
   };
 
