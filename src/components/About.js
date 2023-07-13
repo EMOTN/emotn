@@ -1,6 +1,6 @@
 import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedin } from '@fortawesome/fontawesome-svg-core/import.macro'
 
 
 function About() {
@@ -13,7 +13,7 @@ function About() {
       <p>
       Nataliia Kazik is a software developer with a knack for mindful living. Born in Ukraine, she’s an avid traveler and a cat lover. She’s passionate about modern technologies, enjoys using them to craft delightful user experiences and is currently looking to give her career as a software engineer a strong start.
       </p>
-      <FontAwesomeIcon icon="fa-brands fa-linkedin" style={{color: "#0072b1",}} />
+      <FontAwesomeIcon icon={faLinkedin} style={{color: "#0072b1",}} />
     </div>
   );
 }
