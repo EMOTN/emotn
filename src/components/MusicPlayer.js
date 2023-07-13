@@ -17,13 +17,15 @@ const MusicPlayer = () => {
     };
 
     const handleGenreClick = (genre) => {
-        const genreList = document.getElementById('genreList');
-            if (genreList) {
-            genreList.scrollIntoView({ behavior: 'smooth' });
-        };
         setGenre(genre);
         setSubgenre('');
         setAudioFile('');
+        setTimeout(() => {
+            const genreList = document.getElementById('genreList');
+            if (genreList) {
+              genreList.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 0);
     }
     
     const handleSubgenreClick = async (subgenre) => {
@@ -86,7 +88,7 @@ const MusicPlayer = () => {
                             <button onClick={() => handleSubgenreClick('lounge')}>Lounge</button>
                             <button onClick={() => handleSubgenreClick('reggae')}>Reggae</button>
                             <button onClick={() => handleSubgenreClick('soft electronic')}>Soft Electronic</button>
-                            <button onClick={() => handleSubgenreClick('upbeat electronic')}>Upbeat Electronic</button>
+                            <button onClick={() => handleSubgenreClick('upbeat synth')}>Upbeat Synth</button>
                             </div>
                         )}
                         {genre === 'ambient/ethereal' && (
@@ -110,7 +112,7 @@ const MusicPlayer = () => {
                     </div>
                 )}
                 {subgenre && (
-                    <div id='musicPlayer' style={{ marginBottom: '20px' }}>
+                    <div id='musicPlayer' style={{ marginBottom: '20px', borderRadius: '10px', overflow: 'hidden' }}>
                        <AudioPlayer
                             autoPlay
                             loop 
