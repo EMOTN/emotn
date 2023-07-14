@@ -4,7 +4,6 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import "./UserProfile.css";
 
-
 const UserProfile = () => {
   const [profileData, setProfileData] = useState(null);
   const [updatedProfileData, setUpdatedProfileData] = useState({
@@ -64,10 +63,10 @@ const UserProfile = () => {
 
   return (
     <div className="user-profile-container">
-    <h2>User Profile</h2>
+      <h2>User Profile</h2>
       <form className="user-profile-form" onSubmit={handleUpdateProfile}>
         <label>
-   First Name
+          First Name
           <input
             type="text"
             name="firstName"
@@ -103,13 +102,13 @@ const UserProfile = () => {
             onChange={handleChange}
           />
         </label>
-       
-        <button type="submit">Update Profile</button>
+
+        <button style={{ marginTop: "5px" }} type="submit">
+          Update Profile
+        </button>
       </form>
     </div>
   );
 };
 
 export default UserProfile;
-
-

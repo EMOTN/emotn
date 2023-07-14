@@ -564,6 +564,8 @@
   .ql-snow .ql-formats {
     display: inline-block;
     vertical-align: middle;
+    box-shadow: none; /* Remove box shadow */
+    outline: none; /* Remove outline */
   }
   .ql-snow .ql-formats:after {
     clear: both;
@@ -882,6 +884,8 @@
     padding: 8px;
     display: flex;
     justify-content: center;
+    box-shadow: none; /* Remove box shadow */
+    outline: none; /* Remove outline */
   }
   .ql-toolbar.ql-snow .ql-formats {
     margin-right: 15px;

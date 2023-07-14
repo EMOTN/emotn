@@ -1,8 +1,8 @@
 /* CreateUserProfile.css */
 
-.container {
+.container-profile {
   max-width: 400px;
-  margin: 6em auto;
+  margin: 3em auto;
   padding: 40px;
   background-color: rgba(245, 166, 91, 0.6);
   border-radius: 8px;
@@ -34,7 +34,7 @@ input {
   padding: 10px;
   margin-bottom: 16px;
   font-size: 16px;
-  border: 2px solid #6CAE75;
+  border: 2px solid #6cae75;
   border-radius: 4px;
   transform: translateX(0);
   transition: transform 0.3s ease-in;
@@ -48,7 +48,7 @@ button {
   font-weight: bold;
   text-align: center;
   color: #945a5a;
-  background-color: #6CAE75;
+  background-color: #6cae75;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -78,20 +78,17 @@ button:disabled {
   cursor: not-allowed;
 }
 
-
 input::placeholder {
   color: #945a5a;
   opacity: 0.8;
 }
 
-
 input[type="text"]:focus,
 input[type="date"]:focus {
   outline: none;
   box-shadow: 0 0 8px rgba(100, 200, 255, 0.5);
-  border-color: #6CAE75;
+  border-color: #6cae75;
 }
-
 
 input[type="text"]:focus::placeholder,
 input[type="date"]:focus::placeholder {
@@ -99,17 +96,14 @@ input[type="date"]:focus::placeholder {
   transition: opacity 0.5s ease-in;
 }
 
-
 input[type="text"]:hover,
 input[type="date"]:hover {
   border-color: #a6d8a3;
 }
 
-
 input::placeholder {
   font-size: 14px;
 }
-
 
 button:hover::before {
   content: "";
@@ -122,9 +116,3 @@ button:hover::before {
   background-color: rgba(70, 135, 76, 0.4);
   z-index: -1;
 }
-
-
-
-
-
-
