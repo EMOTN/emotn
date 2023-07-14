@@ -1,0 +1,15 @@
+.teamCard {
+    background-color: #ffffff;
+    max-width: 60%;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.teamCard img {
+    margin-bottom: 15px;
+}
+
+.teamCard .social-icon {
+    margin: 5px;
+}
