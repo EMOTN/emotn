@@ -10,20 +10,19 @@ import {
   to,
 } from "@react-spring/web";
 import styles from "./styles.module.css";
-
-import Lottie from "lottie-react"
-import ScrollDown from '../animations/ScrollDown.json'
+import Lottie from "lottie-react";
+import ScrollDown from "../animations/scrollAnimation.json";
 import { Link } from "react-router-dom";
 //Testing background sound animations
 import BackgroundSound from "../animations/DelightfulAnimation.wav";
-// import clickSound from "../Animations/OrganicClick.wav";
-
+// import clickSound from "../animations/OrganicClick.wav";
 import glitchySound from "../animations/GlitchyButton.wav";
 //Parallax imports
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 
 const Home = () => {
   //Parallax
+
   const alignCenter = { display: "flex", alignItems: "center" };
   //Click
   // const [state, toggle] = useState(true)
@@ -169,18 +168,27 @@ const Home = () => {
             style={{
               ...alignCenter,
               justifyContent: "center",
-              marginLeft: "6em",
+              marginLeft: "5em",
             }}
           >
             <div
               className={`${styles.cards} ${styles.parallax} ${styles.purple}`}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
               <div>
                 <animated.div style={animation}>
                   <img
                     src="emotn.png"
                     alt="Emotn"
-                    style={{ display: "block", margin: "1.5em auto" }}
+                    style={{
+                      ...alignCenter,
+                      justifyContent: "center",
+                      marginLeft: "4em",
+                    }}
                   />
                 </animated.div>
               </div>
@@ -292,7 +300,7 @@ const Home = () => {
             style={{
               ...alignCenter,
               justifyContent: "center",
-              marginLeft: "1em",
+              marginLeft: "2.5em",
             }}
           >
             {/* <p className={styles.scrollText}></p> */}
@@ -332,7 +340,7 @@ const Home = () => {
             style={{
               ...alignCenter,
               justifyContent: "center",
-              marginLeft: "1em",
+              marginLeft: "2.5em",
             }}
           >
             {/* <p className={styles.scrollText}></p> */}
