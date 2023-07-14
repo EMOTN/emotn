@@ -94,6 +94,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: transparent;
+  border: none;
+  box-shadow: none; /* Add this line to remove the box shadow */
 }
 
 .button-container {
