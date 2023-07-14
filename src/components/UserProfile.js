@@ -67,7 +67,7 @@ const UserProfile = () => {
     <h2>User Profile</h2>
       <form className="user-profile-form" onSubmit={handleUpdateProfile}>
         <label>
-   First Name:
+   First Name
           <input
             type="text"
             name="firstName"
@@ -77,7 +77,7 @@ const UserProfile = () => {
         </label>
 
         <label>
-          Last Name:
+          Last Name
           <input
             type="text"
             name="lastName"
@@ -86,7 +86,7 @@ const UserProfile = () => {
           />
         </label>
         <label>
-          Date of Birth:
+          Date of Birth
           <input
             type="text"
             name="dateOfBirth"
@@ -95,7 +95,7 @@ const UserProfile = () => {
           />
         </label>
         <label>
-          Phone Number:
+          Phone Number
           <input
             type="text"
             name="phoneNumber"
@@ -103,6 +103,7 @@ const UserProfile = () => {
             onChange={handleChange}
           />
         </label>
+       
         <button type="submit">Update Profile</button>
       </form>
     </div>

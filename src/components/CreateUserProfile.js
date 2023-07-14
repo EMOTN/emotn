@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../config/firebase';
 import { setDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import './createUserProfile.css'
 
 const CreateUserProfile = ({ user, setProfileCreated }) => {
   const [firstName, setFirstName] = useState("");
@@ -30,12 +31,27 @@ const CreateUserProfile = ({ user, setProfileCreated }) => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Create Your Profile</h2>
-      <input placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} type="text" />
-      <input placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} type="text" />
-      <input placeholder="Date of Birth" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} type="date" />
-      <input placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} type="text" />
+      <input
+      placeholder="First Name"
+      value={firstName}
+      onChange={(e) => setFirstName(e.target.value)}
+      type="text" />
+      <input
+      placeholder="Last Name"
+      value={lastName}
+      onChange={(e) => setLastName(e.target.value)}
+      type="text" />
+      <input
+      placeholder="Date of Birth"
+      value={dateOfBirth}
+      onChange={(e) => setDateOfBirth(e.target.value)}
+      type="date" />
+      <input
+      placeholder="Phone Number"
+      value={phoneNumber}
+      onChange={(e) => setPhoneNumber(e.target.value)} type="text" />
       <button onClick={handleProfileCreation}>Create Profile</button>
     </div>
   );

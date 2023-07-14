@@ -1,9 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
 import StyledEngineProvider from "@mui/material/StyledEngineProvider";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { auth, db } from "./config/firebase";
@@ -12,8 +7,7 @@ import ResponsiveAppBar from "./components/Navbar";
 import AppRoutes from "./AppRoutes";
 import { doc, getDoc } from "firebase/firestore";
 import './App.css'
-import Home from "./components/home";
-import SignInForm from "./components/SignInForm";
+import Footer from "./components/Footer";
 
 const theme = createTheme();
 theme.typography.h2 = {
@@ -72,6 +66,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <React.StrictMode>
       <ResponsiveAppBar handleProfileClick={handleProfileClick} user={user} />
+      <Footer />
  <AppRoutes
      user={user}
        profileCreated={profileCreated}

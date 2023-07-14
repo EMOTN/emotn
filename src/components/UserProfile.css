@@ -1,58 +1,101 @@
+/* UserProfile.css */
 
- .user-profile-container {
+
+
+.user-profile-container {
+  max-width: 370px;
+  max-height: 480px;
+  margin: 3em auto;
+  padding: 5em;
+  background-color: rgba(245, 166, 91, 0.6);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  animation: fade-in 0.5s ease-in;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 50vh;
-  margin-top: 40px;
-
+  overflow: hidden;
 }
 
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .user-profile-form {
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
 }
-
-.user-profile-form label {
-  margin-bottom: 10px;
+h2 {
+  font-size: 20px;
+  font-weight: bolder;
+  color:  #c4a9a9;
+  margin-top: 2em;
   text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+}
+
+label {
+  display: block;
+  /* margin-bottom: 1em; */
+  font-size: 14px;
+  color: #555;
 
 }
 
-.user-profile-form input {
-  width: 300px;
-  padding: 12px;
-  margin-bottom: 10px;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
   font-size: 16px;
+  border: 2px solid #6CAE75;
+  border-radius: 4px;
+  transition: border-color 0.3s ease-in-out;
+  transform: translateX(0);
 }
 
-.user-profile-form input:focus {
+input:focus {
   outline: none;
-  box-shadow: 0px 2px 8px rgba(108, 174, 117, 0.5);
+  border-color: #6CAE75;
 }
 
-.user-profile-form button {
+button {
+  display: inline-block;
   padding: 12px 24px;
-  background-color: #6CAE75;
-  color: white;
-  border: none;
-  border-radius: 8px;
   font-size: 16px;
   font-weight: bold;
+  text-align: center;
+  color: #945a5a;
+  background-color: #6CAE75;
+  border: none;
+  border-radius: 4px;
   cursor: pointer;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease-in-out;
+  transform: translateY(0);
+  transition: transform 0.3s ease-in;
+
+
+
 }
 
-.user-profile-form button:hover {
-  background-color: #598f5b;
+button:hover {
+  color: #fff;
+  background-color: #46874c;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:active {
+  transform: translateY(5px);
 }
