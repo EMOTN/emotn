@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -41,6 +41,9 @@ function ResponsiveAppBar() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setIsLoggedIn(!!user);
+      if (user) {
+        handleProfileClick(); // Call handleProfileClick to fetch the user profile data
+      }
     });
 
     return () => {
@@ -48,20 +51,18 @@ function ResponsiveAppBar() {
     };
   }, []);
 
-
   const pages = isLoggedIn
-  ? [
-      { title: "About Us", path: "/about" },
-      { title: "Home", path: "/home" },
-      { title: "Dashboard", path: "/Dashboard" },
-    ]
-  : [
-      { title: "About Us", path: "/about" },
-      { title: "Home", path: "/home" },
-      { title: "Log In", path: "/login" },
-      { title: "Sign Up", path: "/signup" },
-    ];
-
+    ? [
+        { title: "About Us", path: "/about" },
+        { title: "Home", path: "/home" },
+        { title: "Dashboard", path: "/Dashboard" },
+      ]
+    : [
+        { title: "About Us", path: "/about" },
+        { title: "Home", path: "/home" },
+        { title: "Log In", path: "/login" },
+        { title: "Sign Up", path: "/signup" },
+      ];
 
   const handleLogout = () => {
     auth
@@ -113,17 +114,15 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-
   const settings = isLoggedIn
-  ? [
-      { title: "Profile", action: handleProfileLinkClick },
-      { title: "Logout", action: handleLogout },
-    ]
-  : [
-      { title: "Log In", action: () => navigate("/login") },
-      { title: "Sign Up", action: () => navigate("/signup") },
-    ];
-
+    ? [
+        { title: "Profile", action: handleProfileLinkClick },
+        { title: "Logout", action: handleLogout },
+      ]
+    : [
+        { title: "Log In", action: () => navigate("/login") },
+        { title: "Sign Up", action: () => navigate("/signup") },
+      ];
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "#6CAE75" }}>
@@ -144,6 +143,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
+            <img src="logo192.png" style={{ width: "25px", height: "25px" }} />
             EMOTN
           </Typography>
 
@@ -189,6 +189,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
+
           <Typography
             variant="h5"
             noWrap
@@ -205,6 +206,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
+            <img src="icon192.png" />
             EMOTN
           </Typography>
 
@@ -214,16 +216,21 @@ function ResponsiveAppBar() {
                 key={page.title}
                 to={page.path}
                 onClick={handleCloseNavMenu}
-                style={{ textDecoration: "none"}}
+                style={{ textDecoration: "none" }}
               >
                 <Button
                   key={page.title}
-                  sx={{ my: 2, color: "white",  backgroundColor: "transparent",  boxShadow: 'none',display: "block",
-                  "&:active": {
+                  sx={{
+                    my: 2,
+                    color: "white",
                     backgroundColor: "transparent",
-                    boxShadow: "none"
-                  }
-                 }}
+                    boxShadow: "none",
+                    display: "block",
+                    "&:active": {
+                      backgroundColor: "transparent",
+                      boxShadow: "none",
+                    },
+                  }}
                 >
                   {page.title}
                 </Button>
@@ -238,7 +245,6 @@ function ResponsiveAppBar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {profileData ? ( // Check if profileData is available
                   <Avatar
@@ -287,8 +293,3 @@ function ResponsiveAppBar() {
   );
 }
 export default ResponsiveAppBar;
-
-
-
-
-

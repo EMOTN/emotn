@@ -46,8 +46,8 @@ to aid your process within EMOTN’s intimate journaling environment.
 
 ## Created By
 
-Janice Fisher
-Fanny Lin
-Nataliia Kazik
-Sandra Telenchana
 Kristin Becker
+Janice Fisher
+Nataliia Kazik
+Fanny Lin
+Sandra Telenchana

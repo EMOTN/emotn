@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth, db } from '../config/firebase';
-import { setDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
-import './createUserProfile.css'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth, db } from "../config/firebase";
+import { setDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import "./createUserProfile.css";
 
 const CreateUserProfile = ({ user, setProfileCreated }) => {
   const [firstName, setFirstName] = useState("");
@@ -13,14 +13,14 @@ const CreateUserProfile = ({ user, setProfileCreated }) => {
 
   const handleProfileCreation = async () => {
     try {
-      const userRef = doc(db, 'users', user.uid);
+      const userRef = doc(db, "users", user.uid);
       await updateDoc(userRef, {
         firstName,
         lastName,
         dateOfBirth,
         phoneNumber,
         profileCreated: true,
-        entries: [] // Initialize entries as an empty array
+        entries: [], // Initialize entries as an empty array
       });
 
       setProfileCreated(true); // Set the profileCreated state to true
@@ -31,28 +31,42 @@ const CreateUserProfile = ({ user, setProfileCreated }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container-profile">
       <h2>Create Your Profile</h2>
       <input
-      placeholder="First Name"
-      value={firstName}
-      onChange={(e) => setFirstName(e.target.value)}
-      type="text" />
+        style={{ margin: "5px" }}
+        placeholder="First Name"
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        type="text"
+      />
       <input
-      placeholder="Last Name"
-      value={lastName}
-      onChange={(e) => setLastName(e.target.value)}
-      type="text" />
+        style={{ margin: "5px" }}
+        placeholder="Last Name"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        type="text"
+      />
       <input
-      placeholder="Date of Birth"
-      value={dateOfBirth}
-      onChange={(e) => setDateOfBirth(e.target.value)}
-      type="date" />
+        style={{ margin: "5px" }}
+        placeholder="Date of Birth"
+        value={dateOfBirth}
+        onChange={(e) => setDateOfBirth(e.target.value)}
+        type="date"
+      />
       <input
-      placeholder="Phone Number"
-      value={phoneNumber}
-      onChange={(e) => setPhoneNumber(e.target.value)} type="text" />
-      <button onClick={handleProfileCreation}>Create Profile</button>
+        style={{ margin: "5px" }}
+        placeholder="Phone Number"
+        value={phoneNumber}
+        onChange={(e) => setPhoneNumber(e.target.value)}
+        type="text"
+      />
+      <button
+        style={{ display: "block", margin: "0 auto" }}
+        onClick={handleProfileCreation}
+      >
+        Create Profile
+      </button>
     </div>
   );
 };
