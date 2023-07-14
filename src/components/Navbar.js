@@ -129,7 +129,6 @@ function ResponsiveAppBar() {
     <AppBar position="static" sx={{ backgroundColor: "#6CAE75" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -190,7 +189,6 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -216,11 +214,16 @@ function ResponsiveAppBar() {
                 key={page.title}
                 to={page.path}
                 onClick={handleCloseNavMenu}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: "none"}}
               >
                 <Button
                   key={page.title}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{ my: 2, color: "white",  backgroundColor: "transparent",  boxShadow: 'none',display: "block",
+                  "&:active": {
+                    backgroundColor: "transparent",
+                    boxShadow: "none"
+                  }
+                 }}
                 >
                   {page.title}
                 </Button>

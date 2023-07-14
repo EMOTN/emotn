@@ -1,0 +1,130 @@
+/* CreateUserProfile.css */
+
+.container {
+  max-width: 400px;
+  margin: 6em auto;
+  padding: 40px;
+  background-color: rgba(245, 166, 91, 0.6);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  animation: fade-in 0.3s ease-in;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: bolder;
+  margin-bottom: 30px;
+  color: #c4a9a9;
+}
+
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  border: 2px solid #6CAE75;
+  border-radius: 4px;
+  transform: translateX(0);
+  transition: transform 0.3s ease-in;
+  margin-bottom: 16px;
+}
+
+button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #945a5a;
+  background-color: #6CAE75;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in;
+  margin-top: 16px;
+  transform: translateY(0);
+  transition: transform 0.3s ease-in;
+}
+
+button:hover {
+  color: #fff;
+  background-color: #46874c;
+}
+
+input:focus {
+  box-shadow: 0 0 10px rgba(64, 255, 137, 0.5);
+  border-color: #ff4081;
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+input::placeholder {
+  color: #945a5a;
+  opacity: 0.8;
+}
+
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(100, 200, 255, 0.5);
+  border-color: #6CAE75;
+}
+
+
+input[type="text"]:focus::placeholder,
+input[type="date"]:focus::placeholder {
+  opacity: 0.8;
+  transition: opacity 0.5s ease-in;
+}
+
+
+input[type="text"]:hover,
+input[type="date"]:hover {
+  border-color: #a6d8a3;
+}
+
+
+input::placeholder {
+  font-size: 14px;
+}
+
+
+button:hover::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 8px;
+  background-color: rgba(70, 135, 76, 0.4);
+  z-index: -1;
+}
+
+
+
+
+
+

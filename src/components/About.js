@@ -7,6 +7,7 @@ import Janice from "./ourPhotos/Janice.png";
 import Sandra from "./ourPhotos/Sandra.jpg";
 import "./About.css"
 
+
 function About() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
