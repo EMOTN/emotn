@@ -1,0 +1,14 @@
+.new-entry-prompt-container {
+  display: flex;
+  align-items: center;
+}
+
+.prompt-content {
+  flex-grow: 1;
+}
+
+.prompt-animation {
+  width: 200px;
+  height: 200px;
+  flex-shrink: 0;
+}

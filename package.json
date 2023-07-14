@@ -5,6 +5,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@lexical/react": "^0.11.1",
     "@lottiefiles/lottie-interactivity": "^1.6.2",
     "@mui/icons-material": "^5.13.7",
@@ -20,7 +22,11 @@
     "framer-motion": "^10.12.20",
     "i": "^0.3.7",
     "lexical": "^0.11.1",
+
     "lottie-react": "^2.4.0",
+
+    "lottie-web": "^5.12.2",
+
     "moment": "^2.29.4",
     "npm": "^9.8.0",
     "react": "^18.2.0",
@@ -33,8 +39,11 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.14.0",
     "react-scripts": "5.0.1",
+
     "react-spring": "^9.7.2",
     "react-use-gesture": "^9.1.3",
+
+    "react-social-icons": "^5.15.0",
     "reactjs-popup": "^2.0.5",
     "web-vitals": "^2.1.4"
   },
