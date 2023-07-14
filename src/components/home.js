@@ -11,12 +11,12 @@ import {
 } from "@react-spring/web";
 import styles from "./styles.module.css";
 import Lottie from "lottie-react"
-import ScrollDown from '../Animations/ScrollDown.json'
+import ScrollDown from '../animations/ScrollDown.json'
 import { Link } from "react-router-dom";
 //Testing background sound animations
-import BackgroundSound from "../Animations/DelightfulAnimation.wav";
+import BackgroundSound from "../animations/DelightfulAnimation.wav";
 // import clickSound from "../Animations/OrganicClick.wav";
-import glitchySound from "../Animations/GlitchyButton.wav";
+import glitchySound from "../animations/GlitchyButton.wav";
 //Parallax imports
 import { Parallax, ParallaxLayer } from '@react-spring/parallax'
 
