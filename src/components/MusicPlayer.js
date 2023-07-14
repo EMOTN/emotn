@@ -14,7 +14,13 @@ const MusicPlayer = () => {
 
     const handleMusicChoice = () => {
         setOption(true)
-    };
+        setTimeout (() => {
+        const soundtrack = document.getElementById('soundtrack');
+            if (soundtrack) {
+            soundtrack.scrollIntoView({ behavior: 'smooth' });
+        };
+    }, 0)
+    }
 
     const handleGenreClick = (genre) => {
         setGenre(genre);
@@ -49,7 +55,7 @@ const MusicPlayer = () => {
 
     if(option) {
         return (
-            <div style={{ textAlign: 'center' }}>
+            <div id='soundtrack' style={{ textAlign: 'center', marginBottom: "7em" }}>
                 <h2>What would you like to listen to?</h2>
                 <button onClick={() => handleGenreClick('classical')}
                 style={{ backgroundColor: genre === 'classical' ? '#F5A65B' : '' }}> Classical </button>
@@ -62,7 +68,7 @@ const MusicPlayer = () => {
                 <button onClick={() => handleGenreClick('background noise')}
                 style={{ backgroundColor: genre === 'background noise' ? '#F5A65B' : '' }}> Background Noise </button>
                 {genre && (
-                    <div id='genreList' style={{ margin: '20px' }} >
+                    <div id='genreList' style={{ marginTop: '1rem' }} >
                         {genre === 'classical' && (
                             <div>
                             <button onClick={() => handleSubgenreClick('baroque')}>Baroque</button>
@@ -112,7 +118,7 @@ const MusicPlayer = () => {
                     </div>
                 )}
                 {subgenre && (
-                    <div id='musicPlayer' style={{ marginBottom: '20px', borderRadius: '10px', overflow: 'hidden' }}>
+                    <div id='musicPlayer' style={{ margin: '1rem', borderRadius: '10px', overflow: 'hidden' }}>
                        <AudioPlayer
                             autoPlay
                             loop 
@@ -125,10 +131,11 @@ const MusicPlayer = () => {
     }
 
     return (
-        <div>
+        <div style={{ marginBottom: '10rem'}}>
             <button onClick={handleMusicChoice} > ▶️ 🎧 Soundtrack your journaling 🎧 ▶️</button>
         </div>
     )
 }
+
 
 export default MusicPlayer; 
