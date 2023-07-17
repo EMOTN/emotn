@@ -51,3 +51,8 @@ Janice Fisher
 Nataliia Kazik
 Fanny Lin
 Sandra Telenchana
+
+When you want to deploy again:
+1. 'npm run build' FIRST in order to add youe updates
+2. 'firebase deploy --only hosting,firestore' to redeploy 
+
