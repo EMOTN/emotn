@@ -38,34 +38,34 @@ const MusicCredits = () => {
       <h5>Beach</h5>
             <ul>
             <li>10 Minutes Of Peaceful Beach Sounds For Meditation</li>
-                <li><a href="https://www.youtube.com/watch?v=tIZpNrr0uX8">https://www.youtube.com/watch?v=tIZpNrr0uX8</a></li>
                 <li>SFX Provided By AudioBlocks (https://www.audioblocks.com)</li>
+                <li><a href="https://www.youtube.com/watch?v=tIZpNrr0uX8">https://www.youtube.com/watch?v=tIZpNrr0uX8</a></li>
             </ul>
         <h5>Thunderstorm</h5>
             <ul>
             <li>Thunderstorm in Norway - Stardust Vibes</li>
-                <li><a href="https://www.youtube.com/watch?v=ko_c_oDCejA">https://www.youtube.com/watch?v=ko_c_oDCejA</a></li>
                 <li>Thunderstorm Sounds for Sleep: Best Of </li>
                 <li>℗ 2018 Stardust Vibes</li>
+                <li><a href="https://www.youtube.com/watch?v=ko_c_oDCejA">https://www.youtube.com/watch?v=ko_c_oDCejA</a></li>
             </ul>
             <h5>Bird Songs</h5>
             <ul>
             <li>Wonderful Tropical Bird Sounds</li>
-                <li><a href="https://www.youtube.com/watch?v=KyS1HHXl4SE ">https://www.youtube.com/watch?v=KyS1HHXl4SE</a></li>
                 <li>Peaceful Bird Sounds - Bird Sounds</li>
                 <li>℗ 2016, Bird Sounds</li>
+                <li><a href="https://www.youtube.com/watch?v=KyS1HHXl4SE ">https://www.youtube.com/watch?v=KyS1HHXl4SE</a></li>
             </ul>
             <h5>Campfire</h5>
             <ul>
             <li>Relaxing Campfire Sounds [ASMR] | 10 Minutes of Campfire Sounds</li>
-                <li><a href="https://www.youtube.com/watch?v=yUsn0gKNW-0">https://www.youtube.com/watch?v=yUsn0gKNW-0</a></li>
                 <li>All sounds compiled, adjusted and remixed by Daily Relaxation Sounds</li>
+                <li><a href="https://www.youtube.com/watch?v=yUsn0gKNW-0">https://www.youtube.com/watch?v=yUsn0gKNW-0</a></li>
             </ul>
             <h5>Desert Night</h5>
             <ul>
             <li>Night time Nature Sounds - High Desert Nightlife - Crickets, Relaxing</li>
-                <li><a href="https://www.youtube.com/watch?v=r9Ii50ZiEYU">https://www.youtube.com/watch?v=r9Ii50ZiEYU</a></li>
                 <li>All sounds compiled, adjusted and remixed by Sounds Majestic</li>
+                <li><a href="https://www.youtube.com/watch?v=r9Ii50ZiEYU">https://www.youtube.com/watch?v=r9Ii50ZiEYU</a></li>
             </ul>
             <br/>
       <h3 style={{ textDecoration: 'underline' }}>Instrumental</h3>
@@ -137,7 +137,7 @@ const MusicCredits = () => {
             <li>Cello Drone A · Musician's Practice Partner</li>
                 <li>Cello Drones for Tuning and Improvisation</li>
                 <li>℗ 2003 Marcia Sloane</li>
-                <li><a href="https://www.youtube.com/watch?v=qpQ6c0NotCY"></a>https://www.youtube.com/watch?v=qpQ6c0NotCY</li>
+                <li><a href="https://www.youtube.com/watch?v=qpQ6c0NotCY">https://www.youtube.com/watch?v=qpQ6c0NotCY</a></li>
             </ul>
             <br />
             <h3 style={{ textDecoration: 'underline' }}>Background Noise</h3>
@@ -169,7 +169,7 @@ const MusicCredits = () => {
             <ul style={{ marginBottom: "5rem" }}>
             <li>Super Deep Brown Noise</li>
             <li>℗ 2023 SoundSfera Production</li>
-                <li><a href="https://www.youtube.com/watch?v=QU85elrgOXo">https://www.youtube.com/watch?v=QU85elrgOXo</a></li>
+                <li style={{ paddingBottom: "1rem" }}><a href="https://www.youtube.com/watch?v=QU85elrgOXo">https://www.youtube.com/watch?v=QU85elrgOXo</a></li>
             </ul>
         </ul>
     </div>
