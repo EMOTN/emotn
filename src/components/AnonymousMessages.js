@@ -132,7 +132,7 @@ const AnonymousMessages = ({ user }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container-message">
       <h2 className="title">Message in a Bottle</h2>
 
       <div className="button-container">

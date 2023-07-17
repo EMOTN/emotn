@@ -46,8 +46,13 @@ to aid your process within EMOTN’s intimate journaling environment.
 
 ## Created By
 
-Janice Fisher
-Fanny Lin
-Nataliia Kazik
-Sandra Telenchana
 Kristin Becker
+Janice Fisher
+Nataliia Kazik
+Fanny Lin
+Sandra Telenchana
+
+When you want to deploy again:
+1. 'npm run build' FIRST in order to add your updates
+2. 'firebase deploy --only hosting,firestore' to redeploy
+
