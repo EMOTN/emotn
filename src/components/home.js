@@ -206,7 +206,7 @@ const Home = () => {
             }}
           >
             <p className={styles.scrollText}>
-              That journaling you always wanted to get to, simplified.
+              The journaling you always wanted to get to, simplified.
             </p>
           </ParallaxLayer>
 
@@ -324,7 +324,7 @@ const Home = () => {
               <br></br>Keep track of your moods with a calming interface
               designed for peace and tranquility.<br></br>No more scribbling
               your thoughts into the notes app to be lost in the sea of
-              yourgrocery lists and passwords.<br></br>
+              your grocery lists and passwords.<br></br>
               <br></br>No dealing with complex apps with extra distracting
               features<br></br>You deserve a private place to reflect on your
               life.<br></br>EMOTN prioritizes you and your feelings.<br></br>
