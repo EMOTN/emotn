@@ -11,6 +11,7 @@ import Dashboard from "./components/Dashboard";
 import { auth} from "./config/firebase";
 import SignUpForm from "./components/SignUpForm";
 import SignInForm from "./components/SignInForm";
+import MusicCredits from "./components/MusicCredits";
 
 
 function useQuery() {
@@ -64,7 +65,7 @@ function AppRoutes({
         <Route path="/home" element={<Home />} />
         <Route path="/login"  element={<SignInForm />} />
         <Route path="signup" element={<SignUpForm />} />
-
+        <Route path="/music-credits" element={<MusicCredits />} />
         {user ? (
           <>
             {profileCreated ? (

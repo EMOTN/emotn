@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 // import { storage } from "../config/firebase";
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import AudioPlayer from 'react-h5-audio-player';
@@ -118,12 +119,16 @@ const MusicPlayer = () => {
                     </div>
                 )}
                 {subgenre && (
-                    <div id='musicPlayer' style={{ margin: '1rem', borderRadius: '10px', overflow: 'hidden' }}>
-                       <AudioPlayer
+                    <div id='musicPlayer' style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
+                       <AudioPlayer style={{ margin: '1rem', borderRadius: '10px', overflow: 'hidden' }}
                             autoPlay
                             loop 
                             src={audioFile}
-                        />
+                        /> 
+                        <Link to="/music-credits" style={{ marginTop: '1rem', textDecoration: 'none' }}>
+                            <p title="Audio Credits" style={{transition: 'color 0.3s', ':hover': {
+                                color: '#F5A65B'} }}>ℹ️</p>
+                        </Link>
                     </div>
                 )}
             </div>
@@ -131,7 +136,7 @@ const MusicPlayer = () => {
     }
 
     return (
-        <div style={{ marginBottom: '10rem'}}>
+        <div style={{ display: "flex", marginBottom: '10rem'}}>
             <button onClick={handleMusicChoice} > ▶️ 🎧 Soundtrack your journaling 🎧 ▶️</button>
         </div>
     )
