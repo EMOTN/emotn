@@ -52,6 +52,8 @@ Nataliia Kazik
 Fanny Lin
 Sandra Telenchana
 
+https://fir-7334a.web.app/
+
 When you want to deploy again:
 1. 'npm run build' FIRST in order to add your updates
 2. 'firebase deploy --only hosting,firestore' to redeploy
