@@ -206,7 +206,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            <img src="icon192.png" />
+            <img src="logo192.png" alt="fire_logo" width="30" height="30"/>
             EMOTN
           </Typography>
 
